@@ -1,0 +1,71 @@
+{* This is a comment block
+
+Use vars: {{var var_name}}
+*}<!--@subject {{config path="general/store_information/name"}} - Maksutoimeksianto epäonnistunut huomautus @-->
+<!--@vars
+{"var reason":"Transaction Failed Reason",
+"var checkoutType":"Checkout Type",
+"var customerEmail":"Customer Email",
+"var customer":"Customer Name",
+"var items":"Shopping Cart Items",
+"var total":"Total",
+"var billingAddress.format('html')":"Billing Address",
+"var shippingAddress.format('html')":"Shipping Address",
+"var shippingMethod":"Shipping Method",
+"var paymentMethod":"Payment Method",
+"var dateAndTime":"Date and Time of Transaction"}
+@-->
+
+<table>
+    <thead>
+        <tr>
+            <th>Maksutoimeksianto on epäonnistunut.</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <p>
+                    <b>Syy</b><br />
+                    {{var reason}}
+                </p>
+                <p>
+                    <b>Maksutavan tyyppi</b><br />
+                    {{var checkoutType}}
+                </p>
+                <p>
+                    <b>Asiakas:</b><br />
+                    <a href="mailto:{{var customerEmail}}">{{var customer}}</a> &lt;{{var customerEmail}}&gt;
+                </p>
+                <p>
+                    <b>Tuotteet</b><br />
+                    {{var items}}
+                </p>
+                <p>
+                    <b>Loppusumma:</b><br />
+                    {{var total}}
+                </p>
+                <p>
+                    <b>Maksuosoite:</b><br />
+                    {{var billingAddress.format('html')}}
+                </p>
+                <p>
+                    <b>Toimitusosoite:</b><br />
+                    {{var shippingAddress.format('html')}}
+                </p>
+                <p>
+                    <b>Toimitustapa:</b><br />
+                    {{var shippingMethod}}
+                </p>
+                <p>
+                    <b>Maksutapa:</b><br />
+                    {{var paymentMethod}}
+                </p>
+                <p>
+                    <b>Päivämäärä ja aika:</b><br />
+                    {{var dateAndTime}}
+                </p>
+            </td>
+        </tr>
+    </tbody>
+</table>

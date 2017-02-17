@@ -1,0 +1,35 @@
+<?php
+/**
+ * 
+ * NOTICE OF LICENSE
+ *
+ * This source file is released and licensed under a limited, non-exclusive and non-assignable commercial license by Lemonline. 
+ *
+ * @category   Lemonline
+ * @package    Lemonline_SVMPaymentModule
+ * @copyright  Copyright (c) 2012 Lemonline (http://www.lemonline.fi)
+ * @license    http://www.lemonline.fi/licenses/lemonline-license-1.0.txt  Lemonline License
+ */
+
+$_model = $this->getMethod();
+
+$imageText = $this->__("You will be redirected to the Paytrail website when you place an order.");
+
+if (Mage::getStoreConfig("payment/svm/logo_horizontal")) {
+    $horizontal = true;
+} else {
+    $horizontal = false;
+}
+$columns = Mage::getStoreConfig("payment/svm/logo_columns");
+?>
+<fieldset id="payment_form_<?php echo $this->getMethodCode(); ?>" style="display: none;" class="form-list">
+
+<?php if (Mage::getStoreConfig("payment/svm/show_logo")): ?>
+    <?php if($_model->getBypassStatus() == 1): ?>
+        <img src="<?php echo $_model->getPaymentMethodImageUrl($columns, $horizontal) ?>" alt="<?php echo $_model->getLogoAlt() ?>" /><br/>
+    <?php elseif($_model->getPaymentMethodImage()): ?>
+        <img src="<?php echo $this->getSkinUrl($_model->getPaymentMethodImage()) ?>" alt="<?php echo $_model->getConfig('title') ?>" /><br/>
+    <?php endif; ?>
+<?php endif; ?>
+
+</fieldset>

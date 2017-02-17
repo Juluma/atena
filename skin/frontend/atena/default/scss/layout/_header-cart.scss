@@ -1,0 +1,232 @@
+//
+// Magento
+//
+// NOTICE OF LICENSE
+//
+// This source file is subject to the Academic Free License (AFL 3.0)
+// that is bundled with this package in the file LICENSE_AFL.txt.
+// It is also available through the world-wide-web at this URL:
+// http://opensource.org/licenses/afl-3.0.php
+// If you did not receive a copy of the license and are unable to
+// obtain it through the world-wide-web, please send an email
+// to license@magento.com so we can send you a copy immediately.
+//
+// DISCLAIMER
+//
+// Do not edit or add to this file if you wish to upgrade Magento to newer
+// versions in the future. If you wish to customize Magento for your
+// needs please refer to http://www.magento.com for more information.
+//
+// @category    design
+// @package     atena_default
+// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Header - Cart
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Skip Link - Cart
+ */
+
+.skip-cart {
+  margin-bottom: 9px;
+
+  &.skip-link {
+    text-align: right;
+  }
+
+  &:not(.skip-active):hover {
+    .icon {
+      background-position: -50px (-100px + ($toolbar-icon-padding-offset/2) + 1px);
+    }
+  }
+
+  .icon {
+    @extend .icon-sprite;
+    background-position: -0px (-100px + ($toolbar-icon-padding-offset/2) + 1px);
+  }
+}
+
+// ---------------------------------------------
+
+.header-minicart {
+  font-size: $f-size-xs;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  margin-top: 9px;
+  padding: 0 25px;
+
+  & > a {
+    float: right;
+
+    .cartimg {
+      position: relative;
+      float: right;
+
+      .count {
+        position: absolute;
+        color: #fff;
+        font-size: $f-size-xl;
+        font-family: $f-stack-sans;
+        bottom: 3px;
+        //right: 8px;
+        //left: 0;
+        right: 0;
+        width: 30px;
+      }
+    }
+  }
+
+  a.searchIcon {
+    padding: 0 10px 10px 10px;
+    float: right;
+  }
+}
+
+@media (max-width: $bp-medium) {
+  .header-minicart {
+    padding: 0;
+  }
+}
+
+@include bp(min-width, $bp-medium + 1) {
+  .skip-cart {
+    width: auto;
+    padding: 0 10px;
+    float: right;
+
+    label {
+      color: #fff;
+    }
+  }
+
+  #header-cart.skip-active {
+    @include menu;
+    display: block;
+    padding-top: 10px;
+    position: absolute;
+    z-index: 200;
+    top: 62px;
+    right: 0;
+    width: 320px;
+    background: white;
+    border: none;
+  }
+
+}
+
+/* -------------------------------------------- *
+ * Skip Cart Notifier
+ */
+
+.skip-cart .count {
+  display: inline-block;
+  color: #FFFFFF;
+  text-align: center;
+  font-family: $f-stack-sans;
+
+  &:before {
+    //content: '(';
+  }
+  &:after {
+    //content: ')';
+  }
+}
+
+.skip-link.skip-active .count {
+  color: white;
+}
+
+.skip-cart.no-count .count {
+  display: none;
+}
+
+.skip-cart .count.empty {
+  display: none;
+}
+
+/* -------------------------------------------- *
+ * Mini Cart - Empty
+ */
+
+.cart-menu .empty {
+  padding: 20px;
+  text-align: center;
+}
+
+/* -------------------------------------------- *
+ * Mini Cart - Full
+ */
+
+/* Actions */
+
+.cart-menu .actions {
+  overflow: hidden;
+  padding: 15px;
+}
+
+.cart-menu .actions .button {
+  float: left;
+  width: 48%;
+}
+
+.cart-menu .actions .button + .button {
+  margin-left: 4%;
+}
+
+/* Subtotal */
+
+.cart-menu .subtotal {
+  padding: 0 15px 15px;
+  font-family: $f-stack-special;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+/* List */
+
+.mini-cart-list {
+  margin-bottom: 5px;
+}
+
+.mini-cart-list li {
+  position: relative;
+  min-height: (15px + 60px + 15px);
+  padding: 15px 15px 15px (15px + 60px + 15px);
+  border-top: 1px solid $c-module-border;
+  font-size: $f-size-s;
+  line-height: 1.35;
+}
+
+.mini-cart-list .product-name {
+  display: inline-block;
+}
+
+.mini-cart-list .product-image {
+  position: absolute;
+  left: 10px;
+  top: 15px;
+}
+
+.mini-cart-list .product-image img {
+  max-width: 100px;
+  //height: 60px;
+}
+
+//.mini-cart-list .details { }
+
+.mini-cart-list .has-options {
+  margin-bottom: 0;
+  color: $c-text-gray;
+  font-size: $f-size-xs;
+}
+
+/* Too full - additional items will be shown in cart */
+.cart-menu .last-added {
+  padding: 10px 15px 15px;
+  border-top: 1px solid $c-module-border;
+  font-size: $f-size-s;
+}

@@ -1,0 +1,79 @@
+/* reset cms page std styles */
+.std .alsoviewed ul,
+.std .alsoviewed ol { margin: 0; padding: 0; list-style: none; }
+.std .alsoviewed .add-to-links { margin: 5px 0 0; }
+.std .alsoviewed .add-to-links li { margin: 0; }
+.std .alsoviewed .price-box p { margin: 0; }
+
+.alsoviewed .block-title { color: #0A263C; font-size: 14px; font-weight: bold; }
+.col-main .alsoviewed { margin: 0 0 0.7em; }
+.alsoviewed img { max-width: 100%; height: auto; }
+.alsoviewed .products-grid { position: static; background: none; width: auto; }
+.alsoviewed .products-grid .actions { position: static; }
+
+/* multicolumns mode */
+.alsoviewed .products-grid li.item {
+    padding: 7px 1%;
+    margin: 0 1% 7px;
+    clear: none;
+    box-sizing: border-box;
+    float: left;
+}
+.alsoviewed .products-grid.cols-1 li.item { width: 100%; }
+.alsoviewed .products-grid.cols-2 li.item { width: 48%; }
+.alsoviewed .products-grid.cols-3 li.item { width: 31.3%; }
+.alsoviewed .products-grid.cols-4 li.item { width: 23%; }
+.alsoviewed .products-grid.cols-5 li.item { width: 18%; }
+.alsoviewed .products-grid.cols-6 li.item { width: 14.6%; }
+.alsoviewed .products-grid li.item:last-child { margin: 0 1% 7px; } /* rwd fix */
+
+.alsoviewed .products-list .product-image { max-width: 135px; }
+.alsoviewed .products-list .product-shop { margin-left: 150px; float: none; width: auto; padding-left: 0; }
+.alsoviewed .products-list .product-shop .product-name { float: none; }
+.product-view .alsoviewed .add-to-links { margin-right: 0; float: none; }
+.product-view .alsoviewed .add-to-links li { float: none; }
+.product-view .alsoviewed .add-to-links a { border: none; }
+
+/* Sidebar */
+.sidebar .alsoviewed .product-name { font-size: 1em; }
+.sidebar .alsoviewed .products-grid li.item { padding-top: 4px; padding-bottom: 4px; margin-bottom: 5px; }
+.sidebar .alsoviewed .products-grid li.item:last-child { margin-bottom: 5px; } /* rwd fix */
+.sidebar .alsoviewed .products-grid .product-image { margin: 0; width: auto; height: auto; }
+.sidebar .alsoviewed .products-grid .product-name,
+.sidebar .alsoviewed .products-grid .price-box,
+.sidebar .alsoviewed .products-grid .actions { display: none; }
+.sidebar .alsoviewed .products-list li.item { padding: 5px; }
+.sidebar .alsoviewed .products-list .add-to-links li { float: none; display: block; }
+.sidebar .alsoviewed .products-list .product-image { max-width: 30%; height: auto; margin: 0; }
+.sidebar .alsoviewed .products-list .product-shop { margin: 0 0 0 32%; }
+.sidebar .alsoviewed .products-list .btn-atena,
+.sidebar .alsoviewed .products-list .desc,
+.sidebar .alsoviewed .products-list .add-to-links .separator { display: none; }
+
+.alsoviewed .block-content { zoom: 1; }
+.alsoviewed .block-content:after { content: '.'; display: block; clear: both; visibility: hidden; height: 0; font-size: 0; }
+
+@media (max-width: 767px) {
+    /* Three columns instead of six */
+    .alsoviewed .products-grid.cols-6 li.item { width: 31.3%; }
+    .alsoviewed .products-grid.cols-6 li.item:nth-of-type(4n) { clear: left; }
+}
+
+@media (max-width: 480px) {
+    .alsoviewed .products-grid.cols-6 li.item:nth-of-type(4n) { clear: none; }
+    /* Two columns for small screen */
+    .alsoviewed .products-grid li.item { width: 48% !important; padding-left: 2%; padding-right: 2%; }
+    .alsoviewed .products-grid.cols-1 li.item { width: 100% !important; margin-left: 0; margin-right: 0; }
+    /* clear: left for every third li */
+    .alsoviewed .products-grid.cols-2 li.item:nth-of-type(2n+1),
+    .alsoviewed .products-grid.cols-4 li.item:nth-of-type(2n+1),
+    .alsoviewed .products-grid.cols-6 li.item:nth-of-type(2n+1),
+    /* clear: left for every third li inside every third .easycatalog-grid */
+    .alsoviewed .products-grid.cols-3:nth-of-type(2n+1) li.item:nth-of-type(2n+1),
+    .alsoviewed .products-grid.cols-5:nth-of-type(2n+1) li.item:nth-of-type(2n+1),
+    /* clear: left for every second li inside every second .easycatalog-grid */
+    .alsoviewed .products-grid.cols-3:nth-of-type(2n) li.item:nth-of-type(2n),
+    .alsoviewed .products-grid.cols-5:nth-of-type(2n) li.item:nth-of-type(2n) { clear: left; }
+    .alsoviewed .products-grid.cols-3:after,
+    .alsoviewed .products-grid.cols-5:after { content: ''; clear: none; }
+}

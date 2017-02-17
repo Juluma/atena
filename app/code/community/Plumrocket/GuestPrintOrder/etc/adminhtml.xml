@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config>
+	<menu>
+		<plumrocket>
+			<title>Plumrocket</title>
+			<sort_order>80</sort_order>
+            <children>
+				<guestprintorder>
+					<title>Print Order Confirmation as Guest</title>
+					<sort_order>290</sort_order>
+					<action>adminhtml/system_config/edit/section/guestprintorder</action>
+				</guestprintorder>
+			</children>
+		</plumrocket>
+	</menu>
+	<acl>
+		<resources>
+			<admin>
+				<children>
+					<system>
+						<children>
+							<config>
+								<children>
+									<guestprintorder translate="title">
+										<title>Print Order Confirmation as Guest</title>
+									</guestprintorder>
+								</children>
+							</config>
+						</children>
+					</system>
+					<plumrocket>
+						<title>Plumrocket</title>
+						<sort_order>80</sort_order>
+						<children>
+							<guestprintorder translate="title">
+								<title>Print Order Confirmation as Guest Configuration</title>
+								<sort_order>290</sort_order>
+						   </guestprintorder>
+						</children>
+					</plumrocket>
+				</children>
+			</admin>	
+		</resources>
+	</acl>
+</config>

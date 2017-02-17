@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Plumrocket_GuestPrintOrder>
+			<wiki>http://wiki.plumrocket.com/wiki/Magento_Print_Order_Confirmation_as_Guest_v1.x_Extension</wiki>
+			<version>1.0.4</version>
+		</Plumrocket_GuestPrintOrder>
+	</modules>
+	 <frontend>
+        <routers>
+            <sales>
+                <args>
+                    <modules>
+                        <Plumrocket_GuestPrintOrder before="Mage_Sales">Plumrocket_GuestPrintOrder_Sales</Plumrocket_GuestPrintOrder>
+                    </modules>
+                </args>
+            </sales>
+        </routers>
+        <layout>
+			<updates>
+				<guestprintorder>
+					<file>guestprintorder.xml</file>
+				</guestprintorder>
+			</updates>
+		</layout>
+    </frontend>
+	<global>
+		<helpers>
+			<guestprintorder>
+				<class>Plumrocket_GuestPrintOrder_Helper</class>
+			</guestprintorder>
+		</helpers>
+		<blocks>
+			<guestprintorder>
+				<class>Plumrocket_GuestPrintOrder_Block</class>
+			</guestprintorder>
+		</blocks>
+	</global>
+</config> 

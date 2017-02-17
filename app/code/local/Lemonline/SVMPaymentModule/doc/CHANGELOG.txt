@@ -1,0 +1,97 @@
+1.5.4
+- Corrected VAT in bundle product details sent to Paytrail. Added configuration option to select whether parent or child products data are sent to Paytrail.
+
+1.5.3
+- Added configuration amount for minimum payment sum
+
+1.5.2
+- Fixed case in model creation
+
+1.5.1
+- Re-introduced Luottokunta payment method
+- Disabled Tapiola after Nov 26, 2015
+
+1.5.0
+- Added payment method codes for Visa, Nets and MasterCard, Nets
+
+1.4.10
+- 'Send order details to Paytrail' flag overrides all banks when using bypass-module correction
+
+1.4.9
+- 'Send order details to Paytrail' flag overrides all banks when using bypass-module
+
+1.4.8
+- Fixed a bug with special characters in product sku (if 16th character in sku is special character, caused an error on Paytrail API)
+
+1.4.7
+- Added Visa, MasterCard, Maestro, American Express, Diners Club, JCB payment methods
+
+1.4.6
+- Added new payment methods Aktia, Säästöpankit, POP as separate methods
+
+1.4.5
+- Changed API version check logic
+
+1.4.4
+- Added compatibility for Magento 1.8.
+- Changed old Suomen Verkkomaksut URLs and titles to Paytrail
+
+1.4.3
+- If payment is received for a canceled order, it will be reopened now and handled as normal order
+- Added configuration for canceling automatically orders after X days if paytrail has not sent a verification for payment
+
+1.4.2
+- Changed titles from "Suomen Verkkomaksut" to "Paytrail"
+- Added new payment methods Joustoraha and Collector
+- Changed "Sampo Pankki" title to "Danske Bank"
+- Added debug functionality
+- Added some exception handling
+
+1.4.1
+- When using E1 interface, the order rows includes now discount percent and quantity
+- When using E1 interface, the order rows includes now product's sku instead of order item id number
+- Added extra white space characters cleaning in E1 interface order row's product name.
+
+1.4.0
+- Items in shopping cart are not disappearing any more when returning the website without paying
+- Removed payment method selection and bypass option (bypass moved to another module)
+- Added an option to select the used Suomen Verkkomaksut API (E1 or S1)
+
+1.3.0
+- Added a multishipping checkout support. In multishipping checkout S1 version of SV interface is used.
+
+1.2.6
+- Added a "correction row" to the SV Post data. Prevents wrong grand total in SV, if 3rd party modules are used or tax/discount calculation is complex.
+
+1.2.5
+-Added compatibility for Magento Enterprise Edition
+
+1.2.4
+-Fixed: In some cases shopping cart is not empty after successful payment
+
+1.2.3
+-Fixed: Grand total amount excludes shipping amount when using "register" as checkout method
+-Fixed: Missing customer information in SVM request data when using "register" as checkout method
+-Fixed: Bug concerning wrong amount when using different currency in store
+1.2.2
+-Fixed: Bug concerning enabling/disabling the module in Magento 1.4
+1.2.1
+-Fixed: Bug concerning downloadable products not having shipping address
+1.2
+-Fixed: Compatibility with Magento 1.4.1.0
+1.1
+- Updated API 4.1 -> E1
+- New functions:
+	-E1 API enables to add customer info and product info to the order passed to SVM.
+	-Bypass SVM-option.
+	-Option to disable/enable, resize and align horizontally/vertically the SVM-logo at checkout.
+	-Select preselect payment method-option at checkout
+- Fixed: Sort order and payment method visibility in 1.4
+
+1.0.2
+- Fixed: Exception thrown if unknown payment method is selected on Suomen Verkkomaksut
+
+1.0.1
+- Changelog started
+- Fixed: Customer is redirected to cart page without any notice after successful payment.
+

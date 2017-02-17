@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<config>
+    <modules>
+        <Brave_CatalogSearchExtension>
+            <version>1.0.0</version>
+        </Brave_CatalogSearchExtension>
+    </modules>
+    <global>
+        <models>
+            <brave_catalogsearchextension>
+                <class>Brave_CatalogSearchExtension_Model</class>
+            </brave_catalogsearchextension>
+        </models>
+        <events>
+            <controller_action_predispatch_catalogsearch_result_index>
+                <observers>
+                    <awesome_example>
+                        <class>Brave_CatalogSearchExtension_Model_Observer</class>
+                        <method>ExtendedSearch</method>
+                    </awesome_example>
+                </observers>
+            </controller_action_predispatch_catalogsearch_result_index>
+        </events>
+    </global>
+</config>

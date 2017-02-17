@@ -1,0 +1,445 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @see Mage_Catalog_Block_Category_View
+ */
+?>
+<?php
+$_helper = $this->helper('catalog/output');
+$_category = $this->getCurrentCategory();
+
+// Spessutapaukset ilman "peruskategorian" näyttöä
+if ($_category->getParentId() == 20) { // Kirjailijakategoria
+    $author = Mage::getModel('catalog/category')->load($_category->getId());
+    ?>
+    <div class="author">
+        <div class="row author-category">
+            <div class="authors-image col-sm-12 col-md-4">
+                <?php
+                $path = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog' . DS . 'category' . DS;
+
+                $img = $author->getAuthorImage();
+                $imgpath = $img ? $path . $img : '';
+                $imgBy = $author->getAuthorImageBy();
+                $bigImg = $author->getAuthorImageBig();
+
+                if ($imgpath) {
+                    printf('<img class="author-img" src="%s" title="%s">%s %s',
+                        $imgpath,
+                        $author->getName(),
+                        $imgBy ? '<span class="kuvaaja">Kuva: ' . $imgBy . '</span>' : '',
+                        $bigImg ? '<br><a href="' . $path . $bigImg . '" class="sizechart-link" target="_blank">Suuri kuva</a>' : ''
+                    );
+                }
+
+                $img2 = $author->getAuthorImage2();
+                $imgpath2 = $img2 ? $path . $img2 : '';
+                $imgBy2 = $author->getAuthorImage2By();
+                if ($imgpath2) {
+                    printf('<img class="author-img" src="%s" title="%s">%s',
+                        $imgpath2,
+                        $author->getName(),
+                        $imgBy2 ? '<span class="kuvaaja">Kuva: ' . $imgBy2 . '</span>' : ''
+                    );
+                }
+                ?>
+
+            </div>
+            <div class="col-sm-12 col-md-8">
+
+                <?php
+                if ($desc = $author->getDescription()) {
+                    ?>
+                    <div class="row author-desc<?php if (!$img && !$img2) echo ' no-img'; ?>">
+                        <div class="col-sm-12">
+
+                            <h1><?php echo $author->getName(); ?></h1>
+                            <?php echo $desc; ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+                if ($link = $author->getLinkUrl()) {
+                    ?>
+                    <div class="row author-link<?php if (!$img && !$img2) echo ' no-img'; ?>">
+                        <div class="col-sm-12">
+                            <?php echo $link; ?>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+        </div>
+
+    <div class="row">
+        <div class="authors-products col-sm-12">
+            <h3>Tuotanto</h3>
+
+            <?php echo $this->getProductListHtml() ?>
+        </div>
+    </div>
+    <?php
+} elseif ($_category->getId() == 3) { // Uutuudet -kategoria
+    // Haetaan kategoria, joka on määritetty näytettävän etusivulla.
+    $categories = Mage::getResourceModel('catalog/category_collection');
+    $categories->addAttributeToSelect('*')->addAttributeToFilter('season_frontpage', 1)->load();
+    if ($categories->getFirstItem()) {
+        $season = $categories->getFirstItem();
+
+        // Haetaan kategoriat, joiden mukaan ryhmittelyt tehdään.
+        $cat = Mage::getModel('catalog/category')->load($_category->getParentId());
+        $gCategories = $cat->getChildrenCategories();
+        $byCats = [];
+        foreach ($gCategories as $gCat) {
+            $byCats['id'][] = $gCat->getId();
+            $byCats['name'][] = $gCat->getName();
+        }
+
+        // Haetaan kategorian tuotteet, ja jaotellaan kategorioittain (1 tuote voi olla vain yhdessä)
+        $productIds = $groupProducts = [];
+        $collection = $season->getProductCollection()->addAttributeToSort('position');
+        Mage::getModel('catalog/layer')->prepareProductCollection($collection);
+        ?>
+        <script type="text/javascript">
+            // Init array to search
+            var boox = [];
+        </script>
+        <?php
+        foreach ($collection as $product) {
+            $productIds[] = $product->getId();
+            $pCats = $product->getCategoryIds();
+            // Jos on sähkökirja tai pokkari, niin näytä vain siinä kategoriassa.
+            if (in_array(15, $pCats) && in_array(15, $byCats['id'])) { 
+                $pCats = [15];
+            }
+            elseif (in_array(17, $pCats) && in_array(17, $byCats['id'])) { 
+                $pCats = [17];
+            }
+            elseif (in_array(606, $pCats) && in_array(606, $byCats['id'])) { 
+                $pCats = [606];
+            }
+            elseif (in_array(607, $pCats) && in_array(607, $byCats['id'])) { 
+                $pCats = [607];
+            }
+            foreach ($pCats as $pCatId) {
+                if (in_array($pCatId, $byCats['id'])) {
+                    $groupProducts[$pCatId][] = $product->getId();
+                    
+                    if ($author_names = Mage::app()->getCache()->load('author_names_'.$product->getId())) {
+                        $author_names = unserialize($author_names);
+                    } else {
+                        $categoryCollection = $product->getCategoryCollection();
+                        $authors = [];
+                        foreach ($categoryCollection as $_category) {
+                            if ($_category->getParentId() == 20) {
+                                $aData = Mage::getModel('catalog/category')->load($_category->getId())->getData();
+                                $name = ($aData['your_attribute_code']) ? $aData['your_attribute_code'] : '';
+                                $name.= ($aData['sukunimi'] && $name != '') ? ' ' . $aData['sukunimi'] : $aData['sukunimi'];
+                                $authors[] = $name;
+                            }
+                        }
+                        $replace = ", ";
+                        $author_names = implode($replace, $authors);
+                        $pos = strrpos($author_names, ", ");
+                        if ($pos !== false) $author_names = substr_replace($author_names, ' & ', $pos, strlen($replace));
+
+                        Mage::app()->getCache()->save(serialize($author_names), 'author_names_'.$product->getId());
+                    } 
+                    
+                    // Add to boox array of objects
+                    /*
+                    <script type="text/javascript">
+                        boox.push({
+                            id: <?php echo $product->getId(); ?>,
+                            name: '<?php echo $this->stripTags($product->getName(), null, true) ?>',
+                            desc: '<?php echo addslashes(preg_replace("/\r|\n/", "", $this->stripTags($product->getPresentationText(), null, true))) ?>',
+                            shortDesc: '<?php echo addslashes(preg_replace("/\r|\n/", "", $this->stripTags($product->getPresentationIngress(), null, true))) ?>',
+                            keywords: '<?php echo $this->stripTags($product->getMetaKeywords(), null, true) ?>',
+                            author: '<?php echo $author_names ?>'
+                        });
+                    </script>
+                    */
+                    break;
+                }
+            }
+        }
+
+        // Järjestetään vielä array byCats valueiden mukaan
+        $tmp = [];
+        $_collectionSize = 0;
+        foreach ($byCats['id'] as $key => $byCatId) {
+            if (array_key_exists($byCatId, $groupProducts)) {
+                $tmp[$byCats['name'][$key]] = $groupProducts[$byCatId];
+                $_collectionSize++;
+            }
+        }
+        $groupProducts = $tmp;
+        $_columnCount = $this->getColumnCount();
+        $i = 0;
+
+        // Kopioi / liitä -peruskategorian viewin oleelliset asiat, ja liitä uusi
+        ?>
+        <!--
+        <div id="filter-products">
+            <input type="text" name="bookFilter" id="bookFilter" value="">
+            <a class="button btn-atena" href="#" id="bookFilterBtn"/><span>Hae listatuista</span></a>
+            <span id="results-txt"></span>
+        </div>
+        -->
+        <div class="row">
+
+            <div class="col-md-3 col-xs-12">
+                <div class="block block-layered-nav block-layered-nav--no-filters">
+                    <div class="block-content toggle-content">
+                        <dl id="narrow-by-listi">
+                            <dt class="last" style="border-bottom: 1px solid #ccc;">Luokittain</dt>
+                            <dd>
+                                <?php
+                                foreach ($groupProducts as $groupName => $products):
+                                    if (sizeof($products)):
+                                        printf('<ol><li><a href="#%s">%s <span class="count">(%s)</a></li></ol>',
+                                            $groupName,
+                                            $groupName,
+                                            sizeof($products)
+                                        );
+                                    endif;
+                                endforeach;
+                                ?>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div id="seasons-products">
+                    <?php
+                    $productBlock = $this->getLayout()->createBlock('catalog/product_price');
+                    foreach ($groupProducts as $groupName => $products): 
+                        if (sizeof($products)): ?>
+                        <a name="<?php echo $groupName; ?>"></a>
+                        <h2><?php echo $groupName; ?></h2>
+                    <ul class="products-grid products-grid--max-<?php echo $_columnCount; ?>-col">
+                        <?php
+                        foreach ($products as $productId):
+                            $_product = Mage::getModel('catalog/product')->load($productId);
+                            ?>
+                            <li class="item<?php if (($i - 1) % $_columnCount == 0): ?> first<?php elseif ($i % $_columnCount == 0): ?> last<?php endif; ?>"<?php echo ' data-product="' . $_product->getId() . '"'; ?>>
+                                <a href="<?php echo $_product->getProductUrl() ?>"
+                                   title="<?php echo $productBlock->stripTags($productBlock->getImageLabel($_product, 'small_image'), null, true) ?>"
+                                   class="product-image">
+                                    <?php $_imgSize = 286; ?>
+                                    <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+                                         src="<?php echo $productBlock->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize); ?>"
+                                         alt="<?php echo $productBlock->stripTags($productBlock->getImageLabel($_product, 'small_image'), null, true) ?>"/>
+                                </a>
+                                <div class="product-info">
+                                    <?php $full_name = $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                                    <?php //$name_parts = explode(',', $full_name, 2);
+                                    ?>
+                                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>"
+                                                                title="<?php echo $productBlock->stripTags($_product->getName(), null, true) ?>"><?php echo $full_name; ?></a>
+                                    </h2>
+                                    <?php /*if (isset($name_parts[1])) { ?>
+                                        <div class="subtitle"><?php echo $name_parts[1]; ?></div>
+                                    <?php }*/ ?>
+                                    <?php
+                                    // @todo:: Tämä cache muuttujaan!!!
+                                    if ($author_names = Mage::app()->getCache()->load('author_names_'.$_product->getId())) {
+                                        $author_names = unserialize($author_names);
+                                    } else {
+                                        $categoryCollection = $_product->getCategoryCollection();
+                                        $authors = [];
+                                        foreach ($categoryCollection as $_category) {
+                                            if ($_category->getParentId() == 20) {
+                                                $aData = Mage::getModel('catalog/category')->load($_category->getId())->getData();
+                                                $name = ($aData['your_attribute_code']) ? $aData['your_attribute_code'] : '';
+                                                $name.= ($aData['sukunimi'] && $name != '') ? ' ' . $aData['sukunimi'] : $aData['sukunimi'];
+                                                $authors[] = $name;
+                                            }
+                                        }
+                                        $replace = ", ";
+                                        $author_names = implode($replace, $authors);
+                                        $pos = strrpos($author_names, ", ");
+                                        if ($pos !== false) $author_names = substr_replace($author_names, ' & ', $pos, strlen($replace));
+
+                                        Mage::app()->getCache()->save(serialize($author_names), 'author_names_'.$_product->getId());
+                                    }
+                                    ?>
+                                    <h4 class="product-authors"><?php echo $author_names; ?>  &nbsp;</h4>
+                                    <?php                            
+                                    // Provides extra blocks on which to hang some features for products in the list
+                                    // Features providing UI elements targeting this block will display directly below the product name
+                                    if ($productBlock->getChild('name.after')) {
+                                        $_nameAfterChildren = $productBlock->getChild('name.after')->getSortedChildren();
+                                        foreach ($_nameAfterChildren as $_nameAfterChildName) {
+                                            $_nameAfterChild = $productBlock->getChild('name.after')->getChild($_nameAfterChildName);
+                                            $_nameAfterChild->setProduct($_product);
+                                            echo $_nameAfterChild->toHtml();
+                                        }
+                                    }
+                                    echo $this->getLayout()->createBlock('catalog/product_price')
+                                        ->setTemplate('catalog/product/customprice.phtml')
+                                        ->setProduct($_product)
+                                        ->setDisplayMinimalPrice(true)
+                                        ->setIdSuffix($idSuffix='amit')
+                                        ->toHtml();
+                                    //echo $productBlock->getPriceHtml($_product, false);
+                                    ?>
+                                    <?php if ($_product->getRatingSummary()): ?>
+                                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                                    <?php endif; ?>
+                                </div>
+                            </li>
+                            <?php
+                        endforeach; ?>
+                        </ul><?php
+                        endif;
+                    endforeach;
+                    ?>
+                </div>
+            </div>
+        </div>
+
+        <?php /*
+        <script type="text/javascript">
+            (function ($) {
+                $(function () {
+                    var itemsHtml = $('#seasons-products').html();
+
+                    $('#bookFilterBtn').on('click', function (event) {
+                        event.preventDefault();
+                        var searchfor = $('#bookFilter').val();
+                        var found = 0;
+
+                        $('#seasons-products').empty();
+                        $('#seasons-products').html(itemsHtml);
+
+                        boox.each(function (obj, i) {
+                            if (obj.name.search(new RegExp(searchfor, 'i')) == -1 && 
+                                obj.shortDesc.search(new RegExp(searchfor, 'i')) == -1 && 
+                                obj.desc.search(new RegExp(searchfor, 'i')) == -1 && 
+                                obj.keywords.search(new RegExp(searchfor, 'i')) == -1
+                                obj.author.search(new RegExp(searchfor, 'i')) == -1) 
+                            {
+                                $('#seasons-products').find('[data-product="' + obj.id + '"]').remove();
+                            } else {
+                                found++;
+                            }
+                        });
+                        console.log('Array '+boox);
+
+                        $('#results-txt').html('Hakusanalla "' + searchfor + '" löytyi "' + found + '" tuotetta.');
+                    });
+                });
+            })(jQuery);
+        </script>
+        */
+    }
+
+} else { // Peruskategoria
+    ?>
+    <!--
+    <div id="filter-products">
+        <input type="text" name="bookFilter" id="bookFilter" value="">
+        <a class="button btn-atena" href="#" id="bookFilterBtn"/><span>Hae listatuista</span></a>
+        <span id="results-txt"></span>
+    </div>
+    -->
+    <script type="text/javascript">
+        // Init array to search
+        var boox = [];
+    </script>
+    <div class="page-title category-title">
+        <?php if ($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
+            <a href="<?php echo $this->getRssLink() ?>"
+               class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
+        <?php endif; ?>
+        <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
+    </div>
+
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+
+    <?php if ($_description = $this->getCurrentCategory()->getDescription()): ?>
+        <div class="category-description std">
+            <?php echo $_helper->categoryAttribute($_category, $_description, 'description') ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($this->isContentMode()): ?>
+        <?php echo $this->getCmsBlockHtml() ?>
+
+    <?php elseif ($this->isMixedMode()): ?>
+        <?php echo $this->getCmsBlockHtml() ?>
+        <?php echo $this->getProductListHtml() ?>
+
+    <?php else: ?>
+        <?php echo $this->getProductListHtml() ?>
+    <?php endif; ?>
+    <script type="text/javascript">
+    /*
+        (function ($) {
+            $(function () {
+                var itemsHtml = $('.products-grid').html();
+
+                $('#bookFilterBtn').on('click', function (event) {
+                    event.preventDefault();
+                    var searchfor = $('#bookFilter').val();
+                    var found = 0;
+
+                    $('.products-grid').empty();
+                    $('.products-grid').html(itemsHtml);
+
+                    boox.each(function (obj, i) {
+                        if (
+                            obj.name.search(new RegExp(searchfor, 'i')) == -1 && 
+                            obj.shortDesc.search(new RegExp(searchfor, 'i')) == -1 && 
+                            obj.desc.search(new RegExp(searchfor, 'i')) == -1 && 
+                            obj.keywords.search(new RegExp(searchfor, 'i')) == -1 && 
+                            obj.author.search(new RegExp(searchfor, 'i')) == -1
+                        ) {
+                            $('.products-grid').find('[data-product="' + obj.id + '"]').remove();
+                        } else {
+                            found++;
+                        }
+                    });
+                    //console.log(boox);
+
+                    $('#results-txt').html('Hakusanalla "' + searchfor + '" löytyi ' + found + ' tuotetta.');
+                });
+            });
+        })(jQuery);
+    */
+    </script>
+    <?php
+}
+?>
+
+    </div>

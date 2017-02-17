@@ -1,0 +1,38 @@
+<?php
+// Instantiate a category collection object
+
+$categories = Mage::getResourceModel('catalog/category_collection');
+
+$categories->addAttributeToSelect('*');
+$categories->addAttributeToFilter('author_frontpage_presentation', 1);
+$categories->setCurPage(1)->setPageSize(1);
+$categories->load();
+
+if ($categories->getFirstItem()) {
+	$category = $categories->getFirstItem();
+	$imgpath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog' . DS . 'category' . DS;
+	$author = [];
+	$author['text'] = $category->getAuthorFrontpageText();
+	$author['url'] = $category->getUrl();
+	$author['name'] = $category->getName();
+	$image = $category->getAuthorImage();
+	$author['image'] = $image ? $imgpath . $image : '';
+}
+
+if (isset($author)) {
+	printf('
+		<div id="author-presentation" style="background-image: url(%s)">
+			<a href="%s" target="_blank">
+				
+				<div class="author-stuff">
+					<div class="name">%s</div>
+					<div class="text">%s</div>
+				</div>
+			</a>
+		</div>',
+		$author['image'] ? $author['image'] : '',
+		$author['url'],
+		$author['name'],
+		$author['text']
+	);
+}

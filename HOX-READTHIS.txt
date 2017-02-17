@@ -1,0 +1,2 @@
+Vaihda app/design/fronted/atena/deafault/template/page/html/header.phtml:stä staattiset osoitteet oikeiksi livellä.
+

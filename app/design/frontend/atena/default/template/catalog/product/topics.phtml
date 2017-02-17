@@ -1,0 +1,79 @@
+<?php
+Mage::app()->getCache()->remove('frontpage_keywords');
+if ($words = Mage::app()->getCache()->load('frontpage_keywords')) {
+    $words = unserialize($words);
+} else {
+    $products = Mage::getModel('catalog/product')->getCollection();
+    $products->addAttributeToSelect(['meta_keyword']); //feel free to add any other attribues you need.
+    Mage::getSingleton('catalog/product_status')->addVisibleFilterToCollection($products);
+    Mage::getSingleton('catalog/product_visibility')->addVisibleInCatalogFilterToCollection($products);
+    $products->addAttributeToFilter('meta_keyword', ['neq' => 'NULL']);
+    $products->getSelect()->order('RAND()');
+    $words = [];
+
+    foreach ($products as $product) {
+        $tmp = explode(",", $product->getMetaKeyword());
+        foreach ($tmp as $word) {
+            $words[] = ucfirst(strtolower(trim($word)));
+        }
+    }
+    $words = array_unique($words);
+    Mage::app()->getCache()->save(serialize($words), 'frontpage_keywords', [], 1800); // 30 minutes
+}
+?>
+
+<div class="newsflash-frontpage">
+    <div class="newsflash">
+        <div class="freetextbanner">
+            <h7>Kirjojen aiheita</h7>
+            <div class="keywords">
+                <?php
+                $i = 0;
+                foreach ($words as $word) {
+                    if ($i == 25) break;
+                    printf('<span class="word"><a href="#">%s</a></span> ',
+                        $word
+                    );
+                    $i++;
+                }
+                ?>
+            </div>
+            <div id="more-words"><a href="#all-topics" id="more-topics">Lisää kirjojen aiheita >></a></div>
+        </div>
+
+        <div id="all-topics" class="white-popup mfp-hide">
+            <div class="row">
+                <?php
+                asort($words);
+                foreach ($words as $word) {
+                    printf('<div class="col-xs-6 col-sm-4"><span class="word"><a href="#">%s</a></span></div>',
+                        $word
+                    );
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    (function ($) {
+        $(function () {
+            $('.word a').click(function (event) {
+                event.preventDefault();
+                var search = $(this).text();
+                var e = jQuery.Event("keydown");
+                e.which = e.keyCode = 13;
+
+                $('#search').val(search);
+                $('#search').closest('form').submit();
+            });
+
+            $('#more-topics').magnificPopup({
+                type: 'inline',
+                overflowY: 'scroll',
+                closeOnContentClick: true
+            });
+        });
+    })(jQuery);
+</script>

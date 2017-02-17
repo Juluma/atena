@@ -1,0 +1,17 @@
+<dl><dd>
+<div class="page-title">
+<h1>Oho, sivua ei l&ouml;ytynyt...</h1>
+</div>
+<dl><dt>Sivua jonka yritit avata ei l&ouml;ytynyt puodistamme. Tarkista ensin seuraavat:</dt><dd>
+<ul class="disc">
+<li>Jos kirjoitit osoitteen k&auml;sin, tarkista ett&auml; se on varmasti oikein</li>
+<li>Jos klikkasit jotain linkki&auml;, se on virheellinen tai vanhentunut</li>
+</ul>
+</dd></dl><dl><dt></dt><dt>Mit&auml; nyt voit tehd&auml;?</dt><dt></dt><dd>Ei h&auml;t&auml;&auml;, apu on l&auml;hell&auml;!&nbsp;<br />Jos vasta tulit puotiimme, toivotamme sinut tervetulleeksi!&nbsp;</dd><dd>
+<ul class="disc">
+<li>Sivun yl&auml;kulmassa on hakuruutu jolla voit etsi&auml; tuotetta</li>
+<li>Siirry takaisin&nbsp;edelliselle sivulle</li>
+<li>Seuraavilla linkeill&auml; p&auml;&auml;set tutuille sivuille:<br /><a href="home">Puodin etusivu</a>&nbsp;<span class="separator">|</span>&nbsp;<a href="customer/account">Oma tili</a></li>
+<li>Ota yhteytt&auml; asiakaspalveluun, yhteystiedot l&ouml;ytyv&auml;t sivun alaosasta</li>
+</ul>
+</dd></dl></dd></dl>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">   
+	<checkout_onepage_success translate="label">
+        <reference name="content">
+            <reference name="checkout.success">
+            	<action method="setTemplate" ifconfig="guestprintorder/general/replace_success_page_template"><template>guestprintorder/checkout/success.phtml</template></action>
+            </reference>
+        </reference>
+    </checkout_onepage_success>
+</layout>   
+	

@@ -1,0 +1,557 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     atena_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php
+$attribute_images = array();
+foreach ($_product->getMediaGallery('images') as $image) {
+    if ($image['label'] != '') {
+        $attribute_images[$image['label']] = '/media/catalog/product' . $image['file'];
+    }
+}
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="product-view">
+    <div class="product-essential">
+        <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->_isSecure())) ?>"
+              method="post"
+              id="product_addtocart_form"<?php if ($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>"/>
+                <input type="hidden" name="related_product" id="related-products-field" value=""/>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
+                    <div class="product-img-box">
+                        <?php $full_name = $_helper->productAttribute($_product, $_product->getName(), 'name'); ?>
+                        <?php $name_parts = explode(',', $full_name, 2); ?>
+
+                        <?php
+                        $categoryCollection = $_product->getCategoryCollection();
+                        $authors = $author_names = [];
+                        $Category = Mage::getModel('catalog/category');
+                        $i = 0;
+
+                        foreach ($categoryCollection as $_category) {
+                            $parent_id = $_category->getParentId();
+                            if ($parent_id == 20) {
+                                $aCategory = $Category->load($_category->getId());
+                                $aData = $aCategory->getData();
+
+                                $name = '';
+                                if ($aData['your_attribute_code']) $name = $aData['your_attribute_code'];
+                                $name .= ($aData['sukunimi'] && $name != '') ? ' ' . $aData['sukunimi'] : $aData['sukunimi'];
+                                if ($name) {
+                                    $authors[$i]['name'] = $author_names[] = $name;
+                                    $authors[$i]['desc'] = $aData['description'];
+                                    $authors[$i]['img'] = $aData['author_image'] ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog' . DS . 'category' . DS . $aData['author_image'] : null;
+                                    $authors[$i]['url'] = $aData['is_active'] ? Mage::getBaseUrl() . $aCategory['url_path'] : false;
+                                    $i++;
+                                }
+                            }
+                        }
+                        $replace = ", ";
+                        $author_names = implode($replace, $author_names);
+                        $pos = strrpos($author_names, ", ");
+                        if ($pos !== false) $author_names = substr_replace($author_names, ' & ', $pos, strlen($replace));
+                        ?>
+                        <?php if ($author_names): ?>
+                            <div class="book-author-name-mobile">
+                                <?php echo $author_names; ?>
+                                <h8> <?php echo $name_parts[0]; ?><?php if (isset($name_parts[1])) {
+                                        echo $name_parts[1];
+                                    } ?>
+                                </h8>
+
+                                <?php
+                                $subtopic = $_product->getSubtopic();
+                                if ($subtopic) {
+                                    ?>
+                                    <div id="subtopic-mobile">
+                                        <h4>
+                                            <?php echo $subtopic; ?>
+                                        </h4>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+
+                        <?php endif; ?>
+
+                        <div class="product-image-mobile">
+                            <?php echo $this->getChildHtml('media') ?>
+                        </div>
+
+                        <?php
+                        ob_start();
+                        ?>
+                        <div id="book-description"> <!-- @todo: mobiilissa näytä hintojen jälkeen -->
+                            <a href="#" id="descTgl" class="button btn-atena">Kirjan tiedot</a>
+                            <div id="desc-details">
+                                <!--<h8>Kirjan tiedot</h8><br/>
+                                -->ISBN: <?php echo $_product->getSku(); ?><br/>
+                                Asu: <?php echo $_product->getAttributeText('kirja_ulkoasu'); ?><br/>
+                                Sivumäärä: <?php echo $_product->getNumberOfPages(); ?><br/>
+                                Kirjastoluokka: <?php echo $_product->getShortDescription(); ?><br/>
+                                Ilmestyminen: <?php echo date("j.n.Y", strtotime($_product->getReleaseDate())); ?><br/>
+                                Kuvitus: <?php echo $_product->getIllustration(); ?><br/>
+                                Alkuteos: <?php echo $_product->getOriginalBook(); ?><br/>
+                                Suomentaja: <?php echo $_product->getTranslatedBy(); ?><br/>
+
+
+                                Varastossa: <?php
+                                echo $_product->getReleased() ? 'Kyllä' : 'Ei'; 
+                                /* $stock = $_product->getStockItem();
+                                echo $stock->getIsInStock() ? 'Kyllä' : 'Ei'; */
+                                ?><br/>
+                                Hinta:
+                                <?php echo number_format(Mage::helper('tax')->getPrice($_product, $_product->getFinalPrice()), 2, ',', '') . ' &euro;';
+
+                                $other_info = $_product->getOtherInformation();
+                                if ($other_info) {
+                                    echo '<br/>' . $other_info;
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                        $bookDesc = ob_get_clean();
+                        echo $bookDesc;
+                        ?>
+
+                        <?php if ($authors): ?>
+                            <div id="book-authors">
+                                <div class="book-author-wrapper">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+
+                                            <?php if (count($authors) > 0) { ?>
+                                                <h4>Kirjailija<?php if (sizeof($authors) > 1) echo 't'; ?></h4>
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+
+
+                                    <?php if (count($authors) < 2) { ?>
+                                        <?php
+                                        foreach ($authors as $author) {
+                                            $imgLink = '';
+                                            if ($author['url']) {
+                                                $imgLink .= '<a href="' . $author['url'] . '">';
+                                            }
+                                            if ($author['img']) $imgLink .= '<img src="' . $author['img'] . '">';
+                                            if ($author['url']) {
+                                                $imgLink .= '</a>';
+                                            }
+
+                                            printf('<div class="row author-img">
+                                                    <div class="col-sm-12">%s</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 author-name">%s</div>
+                                                    <div class="col-sm-12 tutustu">%s</div>
+                                                </div>',
+                                                $imgLink,
+                                                $author['name'],
+                                                $author['url'] ? '<a href="' . $author['url'] . '" class="button btn-atena">Tutustu</a>' : ''
+                                            );
+
+                                            //printf('<div class="row author-desc"><div class="col-sm-1">&nbsp;</div><div class="col-sm-8">%s</div></div>', $author['desc']);
+                                        }
+                                    }
+                                    ?>
+
+
+
+
+                                    <!--Jos kirjailijoita on kolme tai enempi, tulostetaan vain nimi ja linkki-->
+                                    <?php if (count($authors) > 1) { ?>
+                                    <div class="col-sm-12 author-name author-name-link">
+                                        <?php
+                                        foreach ($authors as $author) {
+                                            printf('
+                                                    <a href="%s">%s</a><br />
+                                                ',
+                                                $author['url'],
+                                                $author['name']
+                                            );
+
+                                            //printf('<div class="row author-desc"><div class="col-sm-1">&nbsp;</div><div class="col-sm-8">%s</div></div>', $author['desc']);
+                                        } ?>
+                                        </div>
+                                        <?php
+                                    }
+                                    ?>
+
+
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-12">
+                    <div class="product-shop">
+                        <?php
+                        if ($author_names) {
+                            ?>
+                            <div id="author-info">
+                                <h3>
+                                    <?php echo $author_names; ?>
+                                </h3>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <div class="product-name">
+
+                            <h8>
+                                <?php echo $name_parts[0]; ?>
+                                <?php if (isset($name_parts[1])) {
+                                    echo $name_parts[1];
+                                } ?>
+                            </h8>
+                            <?php /*
+                            <span class="sku"><?php echo $this->__('Product No.'); ?>: <?php echo $_product->getSku() ?></span>
+                            */ ?>
+                        </div>
+
+                        <div id="book-essentials-wrapper">
+                            <?php
+                            $subtopic = $_product->getSubtopic();
+                            if ($subtopic) {
+                                ?>
+                                <div id="subtopic">
+                                    <h4>
+                                        <?php echo $subtopic; ?>
+                                    </h4>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            <?php
+                            if (in_array($_product->getAttributeText('kirja_ulkoasu'), ['Jättipokkari', 'Pokkari', 'E-Kirja', 'Äänikirja'])) {
+                                ?>
+                                <div id="product-type">
+                                    <h5>
+                                        <?php echo $_product->getAttributeText('kirja_ulkoasu'); ?>
+                                    </h5>
+                                </div>
+                                <?php
+                            }
+                            $ingress = $_product->getPresentationIngress();
+                            if ($ingress) {
+                                ?>
+                                <div id="presentation-ingress">
+                                    <h9><?php echo $ingress; ?></h9>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                        </div>
+                        <?php
+                        $presentation = $_product->getPresentationText();
+                        if ($presentation) {
+                            ?>
+                            <div id="presantation">
+                                <?php echo $presentation; ?>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <div class="extra-info">
+
+                            <?php echo $this->getReviewsSummaryHtml($_product, 'default', false) ?>
+                            <?php echo $this->getChildHtml('product_type_availability'); ?>
+                        </div>
+
+                        <?php echo $this->getChildHtml('alert_urls') ?>
+                        <?php echo $this->getChildHtml('other'); ?>
+
+                        <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                            <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                        <?php endif; ?>
+
+                        <div class="add-to-cart-wrapper">
+                            <?php echo $this->getChildHtml('product_type_data') ?>
+                            <?php echo $this->getChildHtml('extrahint') ?>
+
+                            <?php if (!$this->hasOptions()): ?>
+                                     <?php
+                                    if ($_product->isSaleable() && $_product->getForSale()) { ?>
+                                       <div class="add-to-box">
+                                            <?php echo $this->getChildHtml('addtocart') ?>
+                                            <?php if ($this->helper('wishlist')->isAllow() || $_compareUrl = $this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+                                                <span class="or"><?php echo $this->__('OR') ?></span>
+                                            <?php endif; ?>
+                                        </div>
+                                    <?php
+                                    } else {
+                                        echo '<div class="not-for-sale">';
+                                        echo $this->__('This product is not for sale on web shop.');
+                                        echo '</div>';
+                                    } ?>
+                                    <?php /*
+//                                    <?php echo $this->getChildHtml('addto') ?>
+                                    <?php echo $this->getChildHtml('sharing') ?>
+                                    */ ?>
+                                <?php echo $this->getChildHtml('extra_buttons') ?>
+                            <?php elseif (!$_product->isSaleable() || !$_product->getForSale()): ?>
+                                <div class="not-for-sale">
+                                    <?php
+                                    echo $this->__('This product is not for sale on web shop.');
+                                    /*
+                                    <div class="add-to-box">
+                                        <?php echo $this->getChildHtml('addto') ?>
+                                        <?php echo $this->getChildHtml('sharing') ?>
+                                    </div>
+                                    */ ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <?php
+                        echo str_replace('desc-details', 'desc-details-mobile',
+                            str_replace('descTgl', 'descTglMobile',
+                                str_replace('book-description', 'book-description-mobile', $bookDesc)));
+
+                        $free_module = $_product->getFreeModule();
+                        if ($free_module) {
+                            ?>
+                            <div id="e-books-info">
+                                <?php 
+                                function parseVariablesToHtml($str) {
+                                    $sStart = strpos($str, '{{');
+                                    $eStart = strpos($str, '}}');
+                                    if ($eStart !== false && $sStart !== false) {
+                                        $var = substr($str, $sStart, $eStart+2-$sStart);
+                                        if (strpos($var, 'media') !== false && strpos($var, 'url') !== false) {
+                                            $media_url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA);
+                                            $url = explode('"', $var)[1];
+                                            $path = $media_url . $url;                                            
+                                            $str = str_replace($var, $path, $str);
+                                        }
+                                        return parseVariablesToHtml($str);
+                                    }
+                                    return $str;
+                                }
+                                $free_module = parseVariablesToHtml($free_module);
+                                echo $free_module; 
+                                ?>
+                            </div>
+                            <?php
+                        }
+                        /*
+                        <div class="info-part">
+                            <?php echo $this->getChildHtml('cms_color_information'); ?>
+                        </div>
+                        */
+                        ?>
+                        <div id="book-quotes">
+                            <?php
+                            if ($_product->getQuotes()) { ?>
+                                <?php echo $_product->getQuotes();
+                            } ?>
+
+
+
+                            <?php if ($_product->getMetaKeyword()) { ?>
+                                <div class="keywords-products">
+                                <h8>Asiasanat</h8>
+                                <p><?php echo $_product->getMetaKeyword();
+                            } ?></p>
+                                    </div>
+
+                        </div>
+
+                        <?php if ($_product->getDescription()): ?>
+                            <div class="short-description info-part">
+                                <strong><?php echo $this->__('Additional Information'); ?>: </strong><br>
+                                <div
+                                    class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'description') ?></div>
+
+
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if ($_product->getMaterial()): ?>
+                            <div class="material info-part">
+                                <strong><?php echo $this->__('Materials'); ?>: </strong><br>
+                                <div
+                                    class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getMaterial()), 'material') ?></div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+
+                </div>
+            </div>
+
+            <?php echo $this->getChildHtml('related_products') ?>
+
+            <div class="clearer"></div>
+            <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+            <?php endif; ?>
+        </form>
+        <script type="text/javascript">
+            //<![CDATA[
+            var productAddToCartForm = new VarienForm('product_addtocart_form');
+            productAddToCartForm.submit = function (button, url) {
+                if (this.validator.validate()) {
+                    var form = this.form;
+                    var oldUrl = form.action;
+
+                    if (url) {
+                        form.action = url;
+                    }
+                    var e = null;
+                    try {
+                        this.form.submit();
+                    } catch (e) {
+                    }
+                    this.form.action = oldUrl;
+                    if (e) {
+                        throw e;
+                    }
+
+                    if (button && button != 'undefined') {
+                        button.disabled = true;
+                    }
+                }
+            }.bind(productAddToCartForm);
+
+            productAddToCartForm.submitLight = function (button, url) {
+                if (this.validator) {
+                    var nv = Validation.methods;
+                    delete Validation.methods['required-entry'];
+                    delete Validation.methods['validate-one-required'];
+                    delete Validation.methods['validate-one-required-by-name'];
+                    // Remove custom datetime validators
+                    for (var methodName in Validation.methods) {
+                        if (methodName.match(/^validate-datetime-.*/i)) {
+                            delete Validation.methods[methodName];
+                        }
+                    }
+
+                    if (this.validator.validate()) {
+                        if (url) {
+                            this.form.action = url;
+                        }
+                        this.form.submit();
+                    }
+                    Object.extend(Validation.methods, nv);
+                }
+            }.bind(productAddToCartForm);
+            //]]>
+        </script>
+    </div>
+
+    <?php /*
+    <div class="product-collateral toggle-content tabs">
+        <?php if ($detailedInfoGroup = $this->getChildGroup('detailed_info', 'getChildHtml')):?>
+            <dl id="collateral-tabs" class="collateral-tabs">
+                <?php foreach ($detailedInfoGroup as $alias => $html):?>
+                    <dt class="tab"><span><?php echo $this->escapeHtml($this->getChildData($alias, 'title')) ?></span></dt>
+                    <dd class="tab-container">
+                        <div class="tab-content"><?php echo $html ?></div>
+                    </dd>
+                <?php endforeach;?>
+            </dl>
+        <?php endif; ?>
+    </div>
+    */ ?>
+
+    <?php echo $this->getChildHtml('upsell_products') ?>
+    <?php echo $this->getChildHtml('product_additional_data') ?>
+
+    <script>
+        (function ($) {
+            $(function () {
+                var $productOptionsWrapper = $('#product-options-wrapper'),
+                    attributeImages = <?php print json_encode($attribute_images) ?>,
+                    sizeColors = {
+                        XS: '#ffd36d',
+                        S: '#ff858c',
+                        M: '#00a3b9',
+                        L: '#c37a58',
+                        XL: '#78a3cc',
+                        XXL: '#87898f'
+                    };
+
+                $productOptionsWrapper.find('.label').each(function () {
+                    var $this = $(this),
+                        attributeName = $this.text().trim();
+
+                    if (typeof sizeColors[attributeName] !== 'undefined') {
+                        var $label = $this.find('label');
+                        $label.css('background-color', sizeColors[attributeName]);
+                    }
+                    if (typeof attributeImages[attributeName] !== 'undefined') {
+                        var $label = $this.find('label');
+                        // If there is only one option type available (presumably size AND color), keep both option label AND option image
+                        // else remove text from options that have an image
+                        if ($productOptionsWrapper.find('dt').length > 1) {
+                            $label.contents().filter(function () {
+                                return this.nodeType === 3; // Text nodes only
+                            }).remove();
+                            $this.addClass('has-image');
+                            $label.append('<img src="' + attributeImages[attributeName] + '" />');
+                        } else {
+                            $label.before('<img src="' + attributeImages[attributeName] + '" /><br>');
+                        }
+                    }
+                });
+
+                $('.has-image').on('click', function (e) {
+                    $(this).prev('input').click();
+                });
+
+                $('#descTgl, #descTglMobile').click(function (e) {
+                    e.preventDefault();
+                    var addon = $(this).attr('id') == 'descTglMobile' ? '-mobile' : '';
+                    if ($('#desc-details'+addon).is(':hidden')) {
+                        $('#desc-details'+addon).show();
+                    } else {
+                        $('#desc-details'+addon).hide();
+                    }
+                });
+            });
+        })(jQuery);
+    </script>
+
+</div>

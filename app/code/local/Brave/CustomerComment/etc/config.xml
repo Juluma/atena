@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <global>
+        <modules>
+            <Brave_CustomerComment>
+                <version>0.1.0</version>
+            </Brave_CustomerComment>
+        </modules>
+
+        <helpers>
+            <customercomment>
+                <class>Brave_CustomerComment_Helper</class>
+            </customercomment>
+        </helpers>
+    </global>
+
+    <frontend>
+        <events>
+            <checkout_type_onepage_save_order>
+                <observers>
+                    <customercomment_set_customerordercomment>
+                        <type>model</type>
+                        <class>Brave_CustomerComment_Helper_CustomerOrderComment</class>
+                        <method>setCustomerOrderComment</method>
+                    </customercomment_set_customerordercomment>
+                </observers>
+            </checkout_type_onepage_save_order>
+        </events>
+    </frontend>
+</config>

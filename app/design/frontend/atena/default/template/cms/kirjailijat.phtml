@@ -1,0 +1,120 @@
+<?php
+
+$page = isset($_GET['p']) ? $_GET['p'] : 1;
+
+// Haetaan kirjailijat -luokan alakategoriat
+$children_categories = Mage::getModel('catalog/category')
+->getCollection()
+->addAttributeToSelect('*')
+->addFieldToFilter('parent_id', ['eq' => 20])
+->addFieldToFilter('include_in_menu', ['eq' => '1'])
+->addFieldToFilter('is_active', ['eq' => '1'])
+->addFieldToFilter('url_key', ['notnull' => true])
+->addAttributeToSort('sukunimi', 'asc')
+->addAttributeToSort('your_attribute_code', 'asc')
+->addUrlRewriteToResult();
+
+switch ($page) {
+	case 0:
+		$cchar = ['A', 'Ö'];
+		break;
+	case 1:
+		$cchar = ['A', 'I'];
+		break;
+	case 2:
+		$cchar = ['J', 'L'];
+		break;
+	case 3:
+		$cchar = ['M', 'R'];
+		break;
+	case 4:
+		$cchar = ['S', 'Ö'];
+		break;
+	default:
+		$cchar = ['A', 'I'];
+		break;
+}
+
+$char = null;
+?>
+<div class="row">
+	<div class="col-sm-12" id="author-groups">
+		<?php	
+
+		$categoryUrl = Mage::helper('cms/page')->getPageUrl(17);
+		echo '<a href="' . $categoryUrl . '">A - I</a>' . ' | ';
+		echo '<a href="' . $categoryUrl . '?p=2">J - L</a>' . ' | ';
+		echo '<a href="' . $categoryUrl . '?p=3">M - R</a>' . ' | ';
+		echo '<a href="' . $categoryUrl . '?p=4">S - Ö</a>' . ' | ';
+		echo '<a href="' . $categoryUrl . '?p=0">Kaikki</a>';
+
+		?>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-8" id="author-links">
+		<?php
+		$i = 0;
+		$authorsByChars = [];
+		mb_internal_encoding("UTF-8");
+		foreach ($children_categories as $author) {
+			$achar = mb_substr(strtoupper($author->getSukunimi()), 0, 1);
+			if ($achar >= $cchar[0] && $achar <= $cchar[1]) {
+				$authorsByChars[$achar][$i]['url'] = $author->getUrl($author);
+				$authorsByChars[$achar][$i]['lastname'] = $author->getSukunimi();
+				$authorsByChars[$achar][$i]['firstname'] = $author->getYourAttributeCode();
+				$i++;
+			}
+		}
+		ksort($authorsByChars);
+
+		foreach ($authorsByChars as $char => $authors) {
+			$i = 0;				
+			echo '<div class="row"><div class="col-sm-12"><h4>' . $char . '</h4></div></div>';
+			echo '<div class="row">';
+			
+			foreach ($authors as $author) {
+				if ($i % 2 == 0) echo '</div><div class="row">';
+				printf('<div class="col-sm-12 col-md-6"><a href="%s">%s, %s</a></div>', 
+					$author['url'], 
+					$author['lastname'], 
+					$author['firstname']
+				);
+
+				$i++;
+			}
+			echo '</div>';
+		}
+		?>
+	</div>
+	<div class="col-sm-4" id="author-images">
+		<?php
+
+		$random_categories = Mage::getModel('catalog/category')
+		->getCollection()
+		->addAttributeToSelect('*')
+		->addFieldToFilter('parent_id', ['eq' => 20])
+		->addFieldToFilter('include_in_menu', ['eq' => '1'])
+		->addFieldToFilter('is_active', ['eq' => '1'])
+		->addFieldToFilter('url_key', ['notnull' => true])
+		->addFieldToFilter('author_image', ['notnull' => true])
+		->addUrlRewriteToResult();
+
+		$pagesize = $page == 0 ? 18 : 5;
+		$random_categories->setPageSize($pagesize);
+		$random_categories->getSelect()->order(new Zend_Db_Expr('RAND()'));
+
+		foreach ($random_categories as $author) {
+			printf('<span class="author-img"><a href="%s"><img src="%s"></a></span>',
+				$author->getUrl($author),
+				Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog' . DS . 'category' . DS . $author->getAuthorImage()
+			);
+
+			echo '<br>';
+		}
+
+		?>
+	</div>
+</div>
+

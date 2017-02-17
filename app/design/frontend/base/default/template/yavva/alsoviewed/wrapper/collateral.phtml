@@ -1,0 +1,21 @@
+<?php
+    $_list = $this->getChild('alsoviewed.list');
+    if (!$_list) :
+        return;
+    endif;
+
+    $_productCollection = $_list->getProductCollection();
+    if (!$_productCollection->getSize()) :
+        return;
+    endif;
+
+    $_title = $_list->getTitle();
+    if (null === $_title) :
+        $_title = $this->getTitle();
+    endif;
+?>
+
+<div class="box-collateral alsoviewed">
+    <h2><?php echo $this->__($_title); ?></h2>
+    <?php echo $this->getChildHtml('alsoviewed.list') ?>
+</div>

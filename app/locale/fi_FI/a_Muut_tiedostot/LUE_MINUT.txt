@@ -1,0 +1,4 @@
+- Kopioi käsin tekstitiedostojen sisältö CMS -tiedostoihin ylläpidon puolella.
+
+- Korvaa 503.phtml tiedosto hakemistossa /magento/errors/default/ olevan tiedoston kanssa.
+

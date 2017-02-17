@@ -1,0 +1,36 @@
+<?php
+// Instantiate a category collection object
+
+$categories = Mage::getResourceModel('catalog/category_collection');
+
+$categories->addAttributeToSelect('*');
+$categories->addAttributeToFilter('season_frontpage', 1);
+$categories->setCurPage(1)->setPageSize(1);
+$categories->load();
+
+if ($categories->getFirstItem()) {
+	$category = $categories->getFirstItem();
+	$imgpath = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog' . DS . 'category' . DS;
+
+	$season = [];
+	$season['text'] = $category->getSeasonFrontpageText();
+	$season['text2'] = $category->getSeasonFrontpageText2() ? $category->getSeasonFrontpageText2() : 'Uutuudet';
+	$season['text3'] = $category->getSeasonFrontpageUrlText() ? $category->getSeasonFrontpageUrlText() : 'Tutustu katalogiimme tästä';
+	$season['url'] = $category->getSeasonFrontpageUrl() ? $category->getSeasonFrontpageUrl() : $category->getUrl();
+}
+
+if (isset($season)) {
+	?>
+
+	<div id="season-frontpage">
+		<a href="<?php echo $season['url']; ?>" target="_blank">
+			<div id="bluebox">
+				<div id="brand"><h1 class="decorated"><span>Atena</span></h1></div>
+				<div id="text1"><?php echo $season['text']; ?></div>
+				<div id="text2"><?php echo $season['text2']; ?></div>
+			</div>
+			<div id="text3"><?php echo $season['text3']; ?></div>
+		</a>
+	</div>
+	<?php
+}

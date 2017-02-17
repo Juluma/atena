@@ -1,0 +1,324 @@
+//
+// Magento
+//
+// NOTICE OF LICENSE
+//
+// This source file is subject to the Academic Free License (AFL 3.0)
+// that is bundled with this package in the file LICENSE_AFL.txt.
+// It is also available through the world-wide-web at this URL:
+// http://opensource.org/licenses/afl-3.0.php
+// If you did not receive a copy of the license and are unable to
+// obtain it through the world-wide-web, please send an email
+// to license@magento.com so we can send you a copy immediately.
+//
+// DISCLAIMER
+//
+// Do not edit or add to this file if you wish to upgrade Magento to newer
+// versions in the future. If you wish to customize Magento for your
+// needs please refer to http://www.magento.com for more information.
+//
+// @category    design
+// @package     atena_default
+// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+/* ============================================ *
+ * Footer
+ * ============================================ */
+
+/* -------------------------------------------- *
+ * Footer
+ */
+
+.footer,
+.footer button {
+    font-family: $f-stack-sans;
+}
+
+.footer {
+    clear: both;
+    width: 100%;
+    background-color: #fff;
+    padding-top: 1.7143em;
+    padding-bottom: 3em;
+    position: relative;
+    text-align: center;
+
+    //@include bp(max-width, $bp-xsmall) {
+    //    padding-top: $trim-small;
+    //}
+
+    .block-title {
+        border-bottom: 0;
+        padding: 3px 0;
+
+        strong {
+            font-family: $f-stack-serif;
+            letter-spacing: 0.125em;
+        }
+    }
+
+    .block-title,
+    address {
+        color: $c-text-primary;
+    }
+
+    .row > div {
+        margin-bottom: 1.5em;
+    }
+
+    .links {
+        font-size: 9px;
+
+        ul {
+            width: 100%;
+        }
+
+        li {
+            line-height: 1.2;
+            padding: 2px 0;
+        }
+
+        a {
+            color: #000;
+            &:hover {
+                color: $c-action;
+            }
+        }
+    }
+
+    .block-subscribe {
+        float: right;
+        width: 320px;
+        margin-bottom: $trim;
+    }
+
+    .links,
+    .block-subscribe {
+        font-size: $f-size-xs;
+    }
+
+    .form-subscribe-header {
+        display: none;
+    }
+
+    /* -------------------------------------------- *
+     * Social icons
+     */
+
+    .links.social-media em {
+        background-image: url(../images/social_icons.png);
+        background-repeat: no-repeat;
+        width: 13px;
+        vertical-align: middle;
+        display: inline-block;
+        margin-right: 7px;
+    }
+
+    @include if-min-resolution(2) {
+        .links.social-media em {
+            background-image: url(../images/social_icons@2x.png);
+            background-size: 50px 125px;
+        }
+    }
+
+    @mixin footer-social-icon($class, $y, $height: 13) {
+        .links.social-media em.#{$class} {
+            background-position: 0 -#{$y}px;
+            height: #{$height}px;
+        }
+
+        .links.social-media a:hover em.#{$class} {
+            background-position: -25px -#{$y}px;
+        }
+    }
+
+    @include footer-social-icon(facebook, 0);
+    @include footer-social-icon(twitter, 24);
+    @include footer-social-icon(youtube, 49);
+    @include footer-social-icon(pinterest, 74, 15);
+    @include footer-social-icon(rss, 99);
+
+    // ---------------------------------------------
+
+    .block-subscribe .input-box {
+        float: left;
+        width: percentage(210px/320px);
+        padding-top: 0;
+    }
+
+    .block-subscribe .input-text {
+        width: 100%;
+        border-right: 0;
+        @include border-radius(0);
+    }
+
+    .block-subscribe .block-content {
+        padding-top: 7px;
+
+        &:after {
+            @include clearfix;
+        }
+    }
+
+    .block-subscribe .actions {
+        float: left;
+        width: percentage(110px/320px);
+        margin: 0;
+    }
+
+    .block-subscribe .actions .button {
+        height: 30px;
+        line-height: 17px;
+        float: left;
+    }
+
+    .bugs,
+    address {
+        clear: both;
+    }
+
+    .bugs {
+        display: none;
+    }
+
+    .form-language,
+    .currency-switcher,
+    .store-switcher {
+        clear: both;
+        margin-bottom: $gap;
+    }
+
+    .form-language,
+    .currency-switcher {
+        display: none;
+    }
+
+    address {
+        border-top: 1px solid $c-module-border;
+        text-align: center;
+        width: 100%;
+        font-size: $f-size-xxs;
+        margin-top: $trim;
+        padding: $trim 0;
+    }
+
+    @include bp(max-width, $bp-xlarge) {
+        .block-subscribe {
+            clear: both;
+            float: none;
+            margin: 0 auto $trim auto;
+        }
+    }
+
+    @include bp(max-width, $bp-medium) {
+        .form-language,
+        .currency-switcher {
+            display: block;
+        }
+    }
+
+    @include bp(max-width, $bp-small) {
+        .block-subscribe {
+            clear: both;
+            float: left;
+            width: 100%;
+        }
+    }
+
+    /* -------------------------------------------- *
+     * Footer Customer Service
+     */
+
+    .col-sm-4:first-child {
+        text-align: center;
+
+        .smaller {
+            font-size: 12px;
+        }
+    }
+
+    .contact-box {
+        @include letterSpacing();
+        //border: 1px solid #000;
+        padding: $trim-small $trim;
+        font-size: 12px;
+        margin-bottom: 1.25em;
+
+        strong {
+            @include strong();
+            letter-spacing: 0.125em;
+            font-size: $f-size-m;
+            font-family: $f-stack-serif;
+        }
+
+        hr {
+            margin: 0.5em 0;
+            border-top: 1px solid #000;
+            border-bottom: none;
+        }
+
+        .smaller {
+            @include fontSmoothing();
+            font-size: 9px !important;
+        }
+
+        & + p {
+            margin-bottom: 0.6em;
+        }
+    }
+
+    @include bp(min-width, $bp-medium + 1) {
+        .block-title, ul {
+            margin-left: 15px;
+        }
+    }
+
+    .btn-facebook {
+        margin-top: 50px;
+    }
+
+    form {
+        float: right;
+        position: absolute;
+        bottom: 120px;
+        right: 45px;
+    }
+
+    .social-links {
+        border-top: 4px double $c-fieldset-border;
+        padding: 20px;
+        width: 100%;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+
+        .text-center {
+            margin-left:auto;
+            margin-right:auto;
+            text-align: center;
+            width: 310px;
+            display: block;
+
+            a {
+
+                img {
+                    height: 40px;
+                    float:left;
+                    margin:0 10px 10px 10px;
+                }
+            }
+        }
+        @media (max-width:420px) {
+            .text-center {
+                width: 100%;
+            }
+        }
+    }
+
+    .inner-links {
+        text-transform: uppercase;
+    }
+}

@@ -1,0 +1,8 @@
+<config>
+    <modules>
+        <Brave_Categorywidget>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Brave_Categorywidget>
+    </modules>
+</config>

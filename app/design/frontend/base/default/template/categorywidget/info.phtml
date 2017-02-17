@@ -1,0 +1,21 @@
+<?php
+$_categoryName = $this->getCategoryName();
+$_categoryDescription = $this->getCategoryDescription();
+$_categoryImage = $this->getCategoryImage();
+$_categoryUrl = $this->getCategoryUrl();
+?>
+
+<div class="categoryinfo_block block">
+    <a href="<?php echo $_categoryUrl ?>">
+        <div class="categoryinfo-contentwrapper">
+            <div class="categoryinfo-content">
+                <div class="categoryname"><?php echo $_categoryName ?></div>
+                <hr>
+                <div class="categorydescription"><?php echo $_categoryDescription ?></div>
+            </div>
+        </div>
+        <div class="categoryinfo-image" style="background-image: url(<?php echo $_categoryImage ?>);">
+            <img src="<?php echo $_categoryImage ?>" alt="<?php echo $_categoryName ?>" />
+        </div>
+    </a>
+</div>

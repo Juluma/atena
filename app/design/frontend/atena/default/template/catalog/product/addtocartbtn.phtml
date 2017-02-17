@@ -1,0 +1,14 @@
+<?php
+$text = $this->getLabel();
+$params_arr = ['product' => $this->getProduct(), 'qty' => '1']; 
+$url = 'checkout/cart/add?';
+foreach($params_arr as $paramKey => $paramVal) $url_arr[] = $paramKey.'='.$paramVal;
+$url .= implode('&',$url_arr);
+?>
+<form action="<?php echo Mage::getUrl($url) ?>" method="post">
+	<input type="hidden" name="product" value="1" />
+	<input type="hidden" name="form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>"/>
+	<fieldset class="add-to-cart-box">
+		<button class="button btn-atena"><?php echo $text; ?></button>
+	</fieldset>
+</form>

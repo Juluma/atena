@@ -1,0 +1,132 @@
+<div class="std">
+<ul class="messages">
+<li class="notice-msg">
+<ul>
+<li>Ota k&auml;ytt&ouml;&ouml;n selaimen ev&auml;steet jatkaaksesi verkkokaupassa.</li>
+</ul>
+</li>
+</ul>
+<div class="page-title">
+<h1><a name="top"></a>Mit&auml; ovat ev&auml;steet?</h1>
+</div>
+<p>Ev&auml;steet ovat lyhyit&auml; tiedon palasia joita l&auml;hetet&auml;&auml;n ja tallennetaan tietokoneeseesi kun k&auml;yt nettisivuilla. My&ouml;hemmin kun k&auml;yt samalla nettisivulla t&auml;m&auml; tieto l&auml;hetet&auml;&auml;n takaisin sivustolle. Ev&auml;steiden avulla sinut tunnistetaan automaattisesti ja n&auml;in voidaan tarjota yksil&ouml;idymp&auml;&auml; ja parempaa palvelua. Ev&auml;steill&auml; pyrit&auml;&auml;n my&ouml;s turvaamaan ostotapahtumaasi. Ev&auml;steit&auml; ja samantyyppisi&auml; selaintietoja kuten Flash-ev&auml;steit&auml; k&auml;ytet&auml;&auml;n est&auml;m&auml;&auml;n huijauksia ja muihin t&auml;m&auml;nkaltaisiin tarkoituksiin.</p>
+<p>Jos selaimesi on asetettu est&auml;m&auml;&auml;n ev&auml;steet nettisivultamme, sinun ei ole mahdollista tehd&auml; ostoksia tai hy&ouml;ty&auml; muista toiminnoista joita ev&auml;steet tarjoavat. N&auml;it&auml; ovat esimerkiksi tuotteiden lis&auml;&auml;minen ostoskoriin tai henkil&ouml;kohtaisten tuotesuositusten vastaanottaminen. Ev&auml;steet ovat yleinen internetiss&auml; k&auml;ytetty tapa, joita monet nettisivut k&auml;ytt&auml;v&auml;t. Selaimen asetuksissa voit katsoa nettisivujen tallentamia ev&auml;steit&auml; ja my&ouml;s poistaa ne tarpeen mukaan. Suosittelemme ett&auml; otat k&auml;ytt&ouml;&ouml;n ev&auml;steet verkkokauppamme kohdalla.</p>
+<h2 class="subtitle">Ev&auml;steiden kytkeminen p&auml;&auml;lle</h2>
+<ul class="disc">
+<li><a href="#ie7">Internet Explorer 7.x</a></li>
+<li><a href="#ie6">Internet Explorer 6.x</a></li>
+<li><a href="#firefox">Firefox</a></li>
+<li><a href="#opera">Opera 7.x</a></li>
+<li><a href="#safari">Safari 6.x</a></li>
+</ul>
+<h2><a name="ie7"></a>Internet Explorer 7.x</h2>
+<ol>
+<li>
+<p>Avaa Internet Explorer</p>
+</li>
+<li>
+<p><strong>Ty&ouml;kalut</strong>&nbsp;valikosta, valitse <strong>Internet-asetukset</strong></p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU3LTEuZ2lmIn19/" alt="" /></p>
+</li>
+<li>
+<p>Valitse <strong>Tietosuoja</strong>&nbsp;v&auml;lilehti</p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU3LTIuZ2lmIn19/" alt="" /></p>
+</li>
+<li>
+<p>Valitse <strong>Lis&auml;tiedot</strong></p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU3LTMuZ2lmIn19/" alt="" /></p>
+</li>
+<li>
+<p>Valitse&nbsp;<strong>Ohita automaattinen ev&auml;steiden k&auml;sittely</strong>&nbsp;ja <strong>Salli istunnon ev&auml;steet aina</strong></p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU3LTQuZ2lmIn19/" alt="" /></p>
+</li>
+<li>
+<p>Paina&nbsp;<strong>OK</strong></p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU3LTUuZ2lmIn19/" alt="" /></p>
+</li>
+<li>
+<p>Paina&nbsp;<strong>OK</strong></p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU3LTYuZ2lmIn19/" alt="" /></p>
+</li>
+<li>
+<p>K&auml;ynnist&auml; uudelleen Internet Explorer</p>
+</li>
+</ol>
+<p class="a-top"><a href="#top">Takaisin yl&ouml;s</a></p>
+<h2><a name="ie6"></a>Internet Explorer 6.x</h2>
+<ol>
+<li>
+<p><strong>Ty&ouml;kalut</strong>&nbsp;valikosta, valitse&nbsp;<strong>Internet-asetukset</strong><br /><br /></p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU2LTEuZ2lmIn19/" alt="" /></p>
+</li>
+<li>
+<p>Valitse&nbsp;<strong>Tietosuoja</strong>&nbsp;v&auml;lilehti<br /><br /></p>
+</li>
+<li>
+<p>Valitse <strong>Oletus</strong>&nbsp;painike (tai k&auml;sin liuta valitsin kohtaan <strong>Keskitaso</strong>). Paina&nbsp;<strong>OK</strong></p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvaWU2LTIuZ2lmIn19/" alt="" /></p>
+</li>
+</ol>
+<p class="a-top"><a href="#top">Takaisin yl&ouml;s</a></p>
+<h2><a name="firefox"></a>Firefox</h2>
+<ol>
+<li>
+<p>Avaa&nbsp;<strong>Firefox</strong>-valikko</p>
+</li>
+<li>
+<p>Valitse&nbsp;<strong>Asetukset...</strong>&nbsp;- uusi ikkuna aukeaa</p>
+</li>
+<li>
+<p>Valitse <strong>Tietosuoja</strong>&nbsp;v&auml;lilehti ylh&auml;&auml;lt&auml;.</p>
+</li>
+<li>
+<p>Valitse <strong>Sivustot saavat asettaa ev&auml;steit&auml;</strong></p>
+</li>
+<li>
+<p>Valitse <strong>Salli kolmannen osapuolen ev&auml;steet</strong>&nbsp;ja <strong>S&auml;ilyt&auml; ev&auml;steet kunnes ne vanhenevat</strong></p>
+</li>
+<li>
+<p>Tallenna muutokset sulkemalla ikkuna.</p>
+</li>
+</ol>
+<p class="a-top"><a href="#top">Takaisin yl&ouml;s</a></p>
+<h2><a name="opera"></a>Opera 7.x</h2>
+<ol>
+<li>
+<p>Valitse&nbsp;<strong>Ty&ouml;kalut</strong>&nbsp;valikko</p>
+</li>
+<li>
+<p>Valitse&nbsp;<strong>Asetukset...</strong>&nbsp;- uusi ikkuna aukeaa</p>
+</li>
+<li>
+<p>Valitse <strong>Yksityisyys</strong>&nbsp;ikkunan vasemmalta puolelta</p>
+<p><img src="http://www.kokko.eu/puoti/magento/index.php/admin/cms_wysiwyg/directive/___directive/e3tza2luIHVybD0iaW1hZ2VzL2Nvb2tpZXMvb3BlcmEucG5nIn19/" alt="" /></p>
+</li>
+<li>
+<p>Valitse <strong>Kytke ev&auml;steet</strong>&nbsp;ja <strong>Hyv&auml;ksy kaikki ev&auml;steet</strong>&nbsp;pudotusvalikossa "<strong>Normaalit ev&auml;steet</strong>"&nbsp;</p>
+</li>
+<li>
+<p>Tallenna muutokset painamalla&nbsp;<strong>Ok</strong></p>
+</li>
+</ol>
+<p class="a-top"><a href="#top">Takaisin yl&ouml;s</a></p>
+<h2 class="a-top"><a name="safari"></a>Safari 6.x</h2>
+<ol>
+<li>
+<p>Avaa&nbsp;<strong>Safari</strong>&nbsp;valikko</p>
+</li>
+<li>
+<p>Valitse&nbsp;<strong>Asetukset...</strong>&nbsp;- uusi ikkuna aukeaa</p>
+</li>
+<li>
+<p>Valitse&nbsp;<strong>Yksityisyys</strong>&nbsp;v&auml;lilehti ylh&auml;&auml;lt&auml;</p>
+</li>
+<li>
+<p>Valitse kohdassa "<strong>Est&auml; ev&auml;steet" </strong>valinta<strong> "Muilta toimijoilta ja mainostajilta"</strong>&nbsp;</p>
+</li>
+<li>
+<p>Tallenna muutokset sulkemalla ikkuna</p>
+</li>
+</ol>
+<p><a href="#top">Takaisin yl&ouml;s</a><br /><br /></p>
+</div>

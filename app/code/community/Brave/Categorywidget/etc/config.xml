@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<config>
+    <modules>
+        <Brave_Categorywidget>
+            <version>1.0.0</version>
+        </Brave_Categorywidget>
+    </modules>
+    <global>
+        <blocks>
+            <categorywidget>
+                <class>Brave_Categorywidget_Block</class>
+            </categorywidget>
+        </blocks>
+        <helpers>
+            <categorywidget>
+                <class>Brave_Categorywidget_Helper</class>
+            </categorywidget>
+        </helpers>
+    </global>
+</config>

@@ -1,0 +1,229 @@
+//
+// Magento
+//
+// NOTICE OF LICENSE
+//
+// This source file is subject to the Academic Free License (AFL 3.0)
+// that is bundled with this package in the file LICENSE_AFL.txt.
+// It is also available through the world-wide-web at this URL:
+// http://opensource.org/licenses/afl-3.0.php
+// If you did not receive a copy of the license and are unable to
+// obtain it through the world-wide-web, please send an email
+// to license@magento.com so we can send you a copy immediately.
+//
+// DISCLAIMER
+//
+// Do not edit or add to this file if you wish to upgrade Magento to newer
+// versions in the future. If you wish to customize Magento for your
+// needs please refer to http://www.magento.com for more information.
+//
+// @category    design
+// @package     atena_default
+// @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+//
+
+// =============================================
+// Mixin - Typography
+// =============================================
+
+@mixin h1 {
+  line-height: 1.2;
+  //font-variant: small-caps;
+  font-weight: 600;
+  font-style: normal;
+  text-rendering: optimizeLegibility;
+  color: $c-text;
+  margin-bottom: 10px;
+  margin-top: 16px;
+  font-size: 20px;
+  font-family: $f-stack-serif;
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+  @include fontSmoothing();
+}
+
+@mixin h2 {
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-rendering: optimizeLegibility;
+  color: $c-blue;
+  font-style: normal;
+  margin-bottom: 16px;
+  margin-top: 20px;
+  font-size: $f-size-xl;
+  font-family: $f-stack-serif;
+  @include fontSmoothing();
+
+  a {
+    color: $c-black;
+  }
+}
+
+@mixin h3 {
+  line-height: 1.2;
+  font-weight: 600;
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  text-rendering: optimizeLegibility;
+  color: $c-blue;
+  font-style: normal;
+  margin-bottom: 16px;
+  margin-top: 20px;
+  font-size: $f-size-l;
+  font-family: $f-stack-serif;
+  @include fontSmoothing();
+
+  a {
+    color: $c-black;
+  }
+}
+
+@mixin h4 {
+  line-height: 1.2;
+  font-size: 12px;
+  margin-top: 20px;
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+  font-family: $f-stack-serif;
+  color: $c-black;
+  font-size: $f-size-m;
+  font-weight: bold;
+  margin-bottom: 12px;
+  @include fontSmoothing();
+
+  a {
+    color: $c-black;
+  }
+}
+
+@mixin h5 {
+  line-height: 1.2;
+  margin-bottom: 12px;
+  margin-top: 20px;
+  color: $c-h6;
+  font-variant: small-caps;
+  font-style: normal;
+  font-weight: bold;
+  text-rendering: optimizeSpeed;
+  font-size: 18px;
+  font-family: $f-stack-serif;
+  @include fontSmoothing();
+  line-height: 1.0;
+
+  a {
+    color: $c-black;
+  }
+}
+
+@mixin h6 {
+  line-height: 1.2;
+  margin-bottom: 12px;
+  margin-top: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: $c-h6;
+  font-style: normal;
+  text-rendering: optimizeSpeed;
+  font-size: $f-size-s;
+  font-family: $f-stack-sans;
+  @include fontSmoothing();
+
+  a {
+    color: $c-black;
+  }
+}
+
+
+// Viivan kanssa
+@mixin h7 {
+  display: block;
+  color: $c-text;
+  text-align: center;
+  font-family: $f-stack-serif;
+  line-height: 1.4;
+  letter-spacing: 2px;
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+  font-size: $f-size-m;
+  font-weight: 600;
+  padding: 5px;
+  text-transform: uppercase;
+
+  border-bottom: 1px solid #000;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
+  @include fontSmoothing();
+}
+
+@mixin h8 {
+  display: block;
+  color: $c-text;
+  font-family: $f-stack-serif;
+  line-height: 1.4;
+  letter-spacing: 0px;
+  text-rendering: optimizeLegibility;
+  font-style: normal;
+  font-size: $f-size-xl;
+  font-weight: 600;
+  text-transform: uppercase;
+  @include fontSmoothing();
+}
+
+
+@mixin pageTitle() {
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 600;
+  color: $c-text;
+  border-bottom: 1px solid $c-module-border-light;
+  padding-bottom: 3px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  @include fontSmoothing();
+}
+
+@mixin strong() {
+  @include h4;
+  @include fontSmoothing();
+  @include letterSpacing();
+  color: $c-black;
+  font-family: $f-stack-sans;
+  margin-bottom: 0;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@mixin fontSmoothing() {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin lato-Smoothing() {
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: subpixel-antialiased;
+}
+
+@mixin letterSpacing() {
+  letter-spacing: 0.125em;
+}
+
+/** Sitaatit */
+@mixin citation {
+  font-style: italic;
+  font-size: 18px;
+  color: $c-black;
+  line-height: 1.3em;
+  @include fontSmoothing();
+
+  a {
+    color: $c-black;
+  }
+
+  &::before, &::after {
+    content: '"';
+    font-size: $f-size-l;
+    line-height: 0.0em;
+  }
+}

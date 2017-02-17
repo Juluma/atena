@@ -1,0 +1,119 @@
+<p>1.5.2013</p>
+<p>T&auml;ll&auml; sivulla kerrotaan miten {{config path="general/store_information/name"}} (j&auml;ljemp&auml;n&auml; verkkokauppa) k&auml;ytt&auml;&auml; ja suojaa ev&auml;steisiin liittyvi&auml; tietoja, joita annat k&auml;ytt&auml;ess&auml;si verkkokauppaa. Verkkokauppamme on sitoutunut huolehtimaan tietoturvastasi. K&auml;ytt&auml;ess&auml;si ev&auml;steit&auml;, joilla sinut voidaan &nbsp;tunnistaa &nbsp;t&auml;t&auml; verkkokauppaa k&auml;ytt&auml;ess&auml;si perustuvat t&auml;ll&auml; sivulla esitett&auml;v&auml;&auml;n selosteeseen. {{config path="general/store_information/name"}} voi muuttaa selostetta p&auml;ivitt&auml;m&auml;ll&auml; t&auml;t&auml; sivua. K&auml;y katsomassa sivua ajoittain varmistaaksesi ett&auml; olet kanssamme samoilla linjoilla muutoksista. Viimeisin p&auml;ivitys on merkitty sivun alkuun.</p>
+<h2>Mit&auml; tietoja ker&auml;t&auml;&auml;n</h2>
+<p>Saatamme ker&auml;t&auml; seuraavia tietoja:</p>
+<ul>
+<li>nimi</li>
+<li>yhteystiedot sis&auml;lt&auml;en s&auml;hk&ouml;postiosoitteen</li>
+<li>tietoja kuten mieltymykset ja kiinnostuksen kohteet</li>
+<li>muita tietoja liittyen asiakaskyselyihin ja/tai tarjouksiin</li>
+</ul>
+<p>N&auml;et ev&auml;steisiin liittyv&auml;t yksityiskohtaiset ker&auml;ystiedot <a href="#list">Ker&auml;tt&auml;vien ev&auml;steiden listasta</a>.</p>
+<h2>Mit&auml; ker&auml;tt&auml;vill&auml; tiedoilla tehd&auml;&auml;n</h2>
+<p>Ker&auml;&auml;mme tietoa ymm&auml;rt&auml;&auml;ksemme mit&auml; haet, tarjotaksemme parempaa palvelua ja osittain seuraavista syist&auml;:</p>
+<ul>
+<li>Parantaaksemme tuotteita ja palveluita.</li>
+<li>L&auml;hett&auml;&auml;ksemme ajoittain omia ja yhteisty&ouml;kumppaniemme mainoskirjeit&auml; uusista tuotteista, erikoistarjouksista tai muista mielest&auml;mme sinua kiinnostavista aiheista.</li>
+<li>Saatamme olla sinuun yhteydess&auml; markkinointitutkimustarkoituksissa. Yhteydenotto voi tapahtua s&auml;hk&ouml;postilla, puhelimitse tai kirjeitse. Tuloksia voimme k&auml;ytt&auml;&auml; verkkokaupan ja myynnin kehitt&auml;miseen.</li>
+</ul>
+<h2>Turvallisuus</h2>
+<p>Olemme sitoutuneet huolehtimaan ett&auml; tietosi ovat turvassa. Est&auml;&auml;ksemme laittoman tunkeutumisen j&auml;rjestelm&auml;&auml;n tai tietojen vuotamisen, on k&auml;yt&ouml;ss&auml; erilaisia fyysisi&auml;, s&auml;hk&ouml;isi&auml; ja toimintaa ohjaavia tapoja suojaamaan s&auml;hk&ouml;isesti ker&auml;tty&auml; tietoa.</p>
+<h2>Kuinka &nbsp;ev&auml;steit&auml; hy&ouml;dynnet&auml;&auml;n</h2>
+<p>Ev&auml;ste (cookie) on yleisesti k&auml;ytetty pieni tiedosto, joka pyyt&auml;&auml; lupaa tallentua k&auml;ytt&auml;m&auml;si tietokoneen kovalevylle. Antaessasi luvan ev&auml;steen tallentamiseen, se ker&auml;&auml; verkkokaupan k&auml;ytt&ouml;&ouml;n liittyv&auml;&auml; toimintaa. Ev&auml;steet mahdollistavat verkkokaupan vastata yksil&ouml;llisesti juuri sinulle. Verkkokauppa r&auml;&auml;t&auml;l&ouml;i toimintaansa sinun tarpeidesi ja tykk&auml;&auml;misiesi mukaan ker&auml;&auml;m&auml;ll&auml; ja tallentamalla tietoa mieltymyksist&auml;si. Voit milloin tahansa poistaa ev&auml;steit&auml; tietokoneestasi. Yleens&auml; t&auml;m&auml; tapahtuu selaimen asetusten kautta.</p>
+<p>Liikennett&auml; seuraavia ev&auml;steit&auml; k&auml;ytet&auml;&auml;n seuraamaan sivuja joilla vierailet. T&auml;m&auml; auttaa meit&auml; analysoimaan eri sivujen k&auml;ytt&ouml;&auml; ja r&auml;&auml;t&auml;l&ouml;im&auml;&auml;n niit&auml; asiakkaan tarpeisiin. T&auml;t&auml; tietoa k&auml;ytet&auml;&auml;n vain tilastolliseen tarkoitukseen ja tieto poistuu j&auml;rjestelm&auml;st&auml;.</p>
+<p>Kaiken kaikkiaan ev&auml;steet &nbsp;tarjoavat sinulle paremman verkkokaupassa asiointikokemuksen salliessasi meid&auml;n seurata mist&auml; sivuista pid&auml;t ja mist&auml; et. Ev&auml;steet eiv&auml;t mill&auml;&auml;n tavoin salli tunkeutua tietokoneeseesi tai sellaiseen tietoon jota et meille itse jaa. Voit itse valita hyv&auml;ksytk&ouml; ev&auml;steet vai et. Useimmat selaimet automaattisesti hyv&auml;ksyv&auml;t ev&auml;steet, mutta voit itse muuttaa selaimen asetuksia niin ett&auml; ev&auml;steit&auml; ei hyv&auml;ksyt&auml;. T&auml;m&auml; kuitenkin est&auml;&auml; verkkokaupan kaikkien sinulle hy&ouml;dyllisten toimintojen k&auml;ytt&auml;mist&auml;.</p>
+<h2>Linkit muihin sisvustoihin</h2>
+<p>Verkkokauppamme sis&auml;lt&auml;&auml; linkkej&auml; muihin &nbsp;nettisivustoihin. Siirtyess&auml;si verkkokaupastamme pois toiselle nettisivustolle t&auml;llaisen linkin kautta, emme mill&auml;&auml;n tavoin ole osallisena n&auml;iden muiden sivujen tietoturvan kanssa. T&auml;st&auml; johtuen emme voi taata turvallisuuttasi ja yksityisyytt&auml;si n&auml;ill&auml; sivuilla eiv&auml;tk&auml; n&auml;m&auml; ulkopuoliset sivustot sis&auml;lly t&auml;h&auml;n selosteeseen. Tarvittaessa tutustu kyseisen sivuston tietoturvamenettelyyn.</p>
+<h2>Henkil&ouml;kohtaisten tietojen hallinta</h2>
+<p>Voit est&auml;&auml; omien tietojesi ker&auml;&auml;misen ja k&auml;yt&ouml;n seuraavilla tavoin:</p>
+<ul>
+<li>aina kun sinua pyydet&auml;&auml;n t&auml;ytt&auml;m&auml;&auml;n jokin lomake, tarkista kohta jossa voit valita ettei tietojasi k&auml;ytet&auml; suoramarkkinointitarkoituksiin</li>
+<li>jos olet aiemmin hyv&auml;ksynyt suoramarkkinoinnin, voit milloin tahansa perua sen ottamalla yhteytt&auml; asiakaspalveluun</li>
+</ul>
+<p>Emme myy, jaa tai vuokraa henkil&ouml;kohtaisia tietojasi kolmansille osapuolille ellei meill&auml; ole sinun lupaasi tai laki meit&auml; velvoita niit&auml; luovuttamaan.</p>
+<p>Voit pyyt&auml;&auml; n&auml;ht&auml;v&auml;ksesi tiedot, jotka olemme ker&auml;nneet sinusta ottamalla yhteytt&auml; asiakaspalveluun.</p>
+<p>Jos ep&auml;ilet ett&auml; tallentamamme tiedot sinusta ovat v&auml;&auml;ri&auml; tai ep&auml;t&auml;ydellisi&auml;, ota yhteytt&auml; mahdollisimman pian asiakaspelveluumme. Oikaisemme mielell&auml;mme v&auml;&auml;r&auml;n tiedon.</p>
+<h2><a name="list"></a>Ker&auml;tt&auml;vien ev&auml;steiden lista</h2>
+<p>Taulukossa on lueteltu k&auml;ytt&auml;m&auml;mme ev&auml;steet ja mit&auml; tietoa ne tallentavat.</p>
+<table class="data-table">
+<thead>
+<tr><th>EV&Auml;STEEN NIMI</th><th>EV&Auml;STEEN KUVAUS</th></tr>
+</thead>
+<tbody>
+<tr><th>CART</th>
+<td>Yhteys ostoskoriin.</td>
+</tr>
+<tr><th>CATEGORY_INFO</th>
+<td>Sivun luokkatieto, joka sallii sivujen n&auml;kymisen nopeammin.</td>
+</tr>
+<tr><th>COMPARE</th>
+<td>Vertailulistalla olevat tuotteet.</td>
+</tr>
+<tr><th>CURRENCY</th>
+<td>Valitsemasi valuutta.</td>
+</tr>
+<tr><th>CUSTOMER</th>
+<td>Asiakastunnuksesi salattuna.</td>
+</tr>
+<tr><th>CUSTOMER_AUTH</th>
+<td>Ilmoitta oletko kirjautunut sis&auml;&auml;n verkkokauppaan.</td>
+</tr>
+<tr><th>CUSTOMER_INFO</th>
+<td>Asiakasryhm&auml; johon kuulut salattuna.</td>
+</tr>
+<tr><th>CUSTOMER_SEGMENT_IDS</th>
+<td>Asiakassegmentin tunnistenumero.</td>
+</tr>
+<tr><th>EXTERNAL_NO_CACHE</th>
+<td>Kertoo onko v&auml;limuisti k&auml;yt&ouml;ss&auml;.</td>
+</tr>
+<tr><th>FRONTEND</th>
+<td>Verkkokaupassa senhetkisen vierailusi tunniste palvelimella.</td>
+</tr>
+<tr><th>GUEST-VIEW</th>
+<td>Sallii vieraiden muokata omia tilauksiaan.</td>
+</tr>
+<tr><th>LAST_CATEGORY</th>
+<td>Viimeisin vierailemasi luokka.</td>
+</tr>
+<tr><th>LAST_PRODUCT</th>
+<td>Viimeisin katsomasi tuote.</td>
+</tr>
+<tr><th>NEWMESSAGE</th>
+<td>Ilmoittaa uudesta viestist&auml;.</td>
+</tr>
+<tr><th>NO_CACHE</th>
+<td>Ilmoittaa onko v&auml;limuistin k&auml;ytt&auml;minen sallittu.</td>
+</tr>
+<tr><th>PERSISTENT_SHOPPING_CART</th>
+<td>Linkki ostoskoriin ja katseluhistoriaan.</td>
+</tr>
+<tr><th>POLL</th>
+<td>Kyselyiden tunnistenumero joissa olet &auml;&auml;nest&auml;nyt.</td>
+</tr>
+<tr><th>POLLN</th>
+<td>Tieto kyselyist&auml; joihin olet antanut &auml;&auml;nesi.</td>
+</tr>
+<tr><th>RECENTLYCOMPARED</th>
+<td>Tuotteet joita olet &auml;skett&auml;in vertaillut.</td>
+</tr>
+<tr><th>STF</th>
+<td>Tuotteet jotka olet l&auml;hett&auml;nyt s&auml;hk&ouml;postilla yst&auml;ville.</td>
+</tr>
+<tr><th>STORE</th>
+<td>Valitsemasi kauppan&auml;kym&auml; ja kieli.</td>
+</tr>
+<tr><th>USER_ALLOWED_SAVE_COOKIE</th>
+<td>Ilmoittaa onko ev&auml;steet sallittu.</td>
+</tr>
+<tr><th>VIEWED_PRODUCT_IDS</th>
+<td>&Auml;skett&auml;in katsotut tuotteet.</td>
+</tr>
+<tr><th>WISHLIST</th>
+<td>Kauppalistalla olevat tuotteet salattuna.</td>
+</tr>
+<tr><th>WISHLIST_CNT</th>
+<td>Kauppalistalla olevien tuotteiden m&auml;&auml;r&auml;.</td>
+</tr>
+</tbody>
+</table>

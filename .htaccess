@@ -1,0 +1,358 @@
+#SetEnv MAGENTO_DEVURLS /mnt/www4/htdocs/atenakata/urls.ini
+
+############################################
+## uncomment these lines for CGI mode
+## make sure to specify the correct cgi php binary file name
+## it might be /cgi-bin/php-cgi
+
+#    Action php5-cgi /cgi-bin/php5-cgi
+#    AddHandler php5-cgi .php
+
+############################################
+## GoDaddy specific options
+
+#   Options -MultiViews
+
+## you might also need to add this line to php.ini
+##     cgi.fix_pathinfo = 1
+## if it still doesn't work, rename php.ini to php5.ini
+
+############################################
+## this line is specific for 1and1 hosting
+
+    #AddType x-mapp-php5 .php
+    #AddHandler x-mapp-php5 .php
+
+############################################
+## default index file
+
+    DirectoryIndex index.php
+
+<IfModule mod_php5.c>
+
+############################################
+## adjust memory limit
+
+#    php_value memory_limit 64M
+    php_value memory_limit 256M
+    php_value max_execution_time 18000
+
+############################################
+## disable magic quotes for php request vars
+
+    php_flag magic_quotes_gpc off
+
+############################################
+## disable automatic session start
+## before autoload was initialized
+
+    php_flag session.auto_start off
+
+############################################
+## enable resulting html compression
+
+    #php_flag zlib.output_compression on
+
+###########################################
+# disable user agent verification to not break multiple image upload
+
+    php_flag suhosin.session.cryptua off
+
+###########################################
+# turn off compatibility with PHP4 when dealing with objects
+
+    php_flag zend.ze1_compatibility_mode Off
+
+</IfModule>
+
+<IfModule mod_security.c>
+###########################################
+# disable POST processing to not break multiple image upload
+
+    SecFilterEngine Off
+    SecFilterScanPOST Off
+</IfModule>
+
+<IfModule mod_deflate.c>
+
+############################################
+## enable apache served files compression
+## http://developer.yahoo.com/performance/rules.html#gzip
+
+    # Insert filter on all content
+    ###SetOutputFilter DEFLATE
+    # Insert filter on selected content types only
+    #AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript
+
+    # Netscape 4.x has some problems...
+    #BrowserMatch ^Mozilla/4 gzip-only-text/html
+
+    # Netscape 4.06-4.08 have some more problems
+    #BrowserMatch ^Mozilla/4\.0[678] no-gzip
+
+    # MSIE masquerades as Netscape, but it is fine
+    #BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+
+    # Don't compress images
+    #SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png)$ no-gzip dont-vary
+
+    # Make sure proxies don't deliver the wrong content
+    #Header append Vary User-Agent env=!dont-vary
+
+</IfModule>
+
+<IfModule mod_ssl.c>
+
+############################################
+## make HTTPS env vars available for CGI mode
+
+    SSLOptions StdEnvVars
+
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+############################################
+## enable rewrites
+
+    Options +FollowSymLinks
+    RewriteEngine on
+
+
+############################################
+## UUDELLEENOHJAUKSET
+
+    # Uutuudet
+    Redirect 302 /component/ateena/kirjat/12 /kirjat/uutuudet
+    Redirect 302 /component/ateena/kirja/816 /catalog/product/view/id/833/s/viimeiset-polttarit/category/3/
+    # Uuutuudet  - kaunokirjat
+    Redirect 302 /component/ateena/kirja/818 /catalog/product/view/id/835/s/kayttovehkeita/category/3/
+    Redirect 302 /component/ateena/kirja/820 /catalog/product/view/id/837/s/mielikuvituspoikaystava/category/3/
+    Redirect 302 /component/ateena/kirja/822 /catalog/product/view/id/839/s/aanet/category/3/
+    Redirect 302 /component/ateena/kirja/828 /catalog/product/view/id/844/s/kolme-syyta-elaa/category/3/
+    Redirect 302 /component/ateena/kirja/830 /catalog/product/view/id/846/s/ukinpoika/category/3/
+    Redirect 302 /component/ateena/kirja/832 /catalog/product/view/id/848/s/tuulen-suku/category/3/
+    Redirect 302 /component/ateena/kirja/834 /catalog/product/view/id/850/s/veri-ei-vaikene/category/3/
+    Redirect 302 /component/ateena/kirja/836 /catalog/product/view/id/852/s/kalamiehet/category/3/
+    #Uutuudet - historia
+    Redirect 302 /component/ateena/kirja/838 /catalog/product/view/id/854/s/mainio-pikku-sota/category/3/
+    Redirect 302 /component/ateena/kirja/839 /catalog/product/view/id/855/s/tuntematon-sotavanki/category/3/
+    Redirect 302 /component/ateena/kirja/842 /catalog/product/view/id/858/s/gestapo/category/3/
+    Redirect 302 /component/ateena/kirja/848 /catalog/product/view/id/864/s/muutoksen-tekijat/category/3/
+    Redirect 302 /component/ateena/kirja/849 /catalog/product/view/id/865/s/maailma-on-outo/category/3/
+    Redirect 302 /component/ateena/kirja/850 /catalog/product/view/id/866/s/aikamatkaajan-opas-historiaan/category/3/
+    Redirect 302 /component/ateena/kirja/859 /catalog/product/view/id/874/s/etteko-te-tieda-kuka-mina-olen/category/3/
+    #Uutuudet - harrastukset
+    Redirect 302 /component/ateena/kirja/860 /catalog/product/view/id/875/s/villit-elaimet/category/3/
+    Redirect 302 /component/ateena/kirja/869 /etusivu
+    #Uutuudet - ruoka
+    Redirect 302 /component/ateena/kirja/826 /etusivu
+    Redirect 302 /component/ateena/kirja/851 /catalog/product/view/id/867/s/lohturuokaa/category/3/
+    Redirect 302 /component/ateena/kirja/852 /catalog/product/view/id/868/s/maailman-paras-keittokirja/category/3/
+    #Uutuudet - elämä
+    Redirect 302 /component/ateena/kirja/825 /catalog/product/view/id/842/s/voit-nukkua/category/3/
+    Redirect 302 /component/ateena/kirja/843 /catalog/product/view/id/859/s/yhden-lapsen-kansa/category/3/
+    Redirect 302 /component/ateena/kirja/845 /maman-finlandaise
+    Redirect 302 /component/ateena/kirja/847 /catalog/product/view/id/863/s/muista-minut/category/3/
+    #Uutuudet - luonto
+    Redirect 302 /component/ateena/kirja/824 /catalog/product/view/id/841/s/tiaisten-salainen-elama/category/3/
+    #Uutuudet - huumori
+    Redirect 302 /component/ateena/kirja/827 /catalog/product/view/id/843/s/kielletty-lapsilta/category/3/
+    #Uutuudet - pokkarit
+    Redirect 302 /component/ateena/kirja/853 /catalog/product/view/id/869/s/linnan-juhlat-pokkari/category/3/
+    Redirect 302 /component/ateena/kirja/854 /catalog/product/view/id/870/s/sokeat-linnut/category/3/
+    Redirect 302 /component/ateena/kirja/855 /etusivu
+    Redirect 302 /component/ateena/kirja/857 /catalog/product/view/id/872/s/vanki-vakooja-sissi-pokkari/category/3/
+    Redirect 302 /component/ateena/kirja/858 /catalog/product/view/id/873/s/paamajan-kaukopartiomies-pokkari/category/3/
+    Redirect 302 /component/ateena/kirja/866 /etusivu
+    Redirect 302 /component/ateena/kirja/867 /etusivu
+    Redirect 302 /component/ateena/kirja/868 /etusivu
+    #Uutuudet - sähkökirjat
+    Redirect 302 /component/ateena/kirja/817 /catalog/product/view/id/834/s/viimeiset-polttarit-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/819 /catalog/product/view/id/836/s/kayttovehkeita-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/821 /catalog/product/view/id/838/s/mielikuvituspoikaystava-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/823 /catalog/product/view/id/840/s/aanet-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/829 /catalog/product/view/id/845/s/kolme-syyta-elaa-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/833 /catalog/product/view/id/849/s/tuulen-suku-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/835 /catalog/product/view/id/851/s/veri-ei-vaikene-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/837 /catalog/product/view/id/853/s/kalamiehet-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/840 /catalog/product/view/id/856/s/tuntematon-sotavanki-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/844 /catalog/product/view/id/860/s/yhden-lapsen-kansa-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/846 /catalog/product/view/id/862/s/maman-finlandaise-sahkokirja/category/3/
+    Redirect 302 /component/ateena/kirja/865 /etusivu
+    #Uutuudet kevät2016 - kaunokirjat
+    Redirect 302 /component/ateena/kirja/782 /mita-miehen-pitaa
+    Redirect 302 /component/ateena/kirja/784 /jonain-kevaana-heraan
+    Redirect 302 /component/ateena/kirja/786 /tahtisilma
+    Redirect 302 /component/ateena/kirja/788 /kuolema-kevaalla
+    Redirect 302 /kuolema-kevaalla /kaikki-pysyvainen-haihtuu-pois
+    Redirect 302 /component/ateena/kirja/791  /naulankantakeitto
+    #Uutuudet kevät2016 - historia
+    Redirect 302 /component/ateena/kirja/795 /lupaathan-tappaa-itsesi
+    #Uutuudet kevät2016 - harrastukset
+    Redirect 302 /component/ateena/kirja/779 /varita-itsellesi-mielenrauhaa-3
+    Redirect 302 /component/ateena/kirja/780 /varita-itsellesi-mielenrauhaa-4
+    Redirect 302 /component/ateena/kirja/803 /ihanat-albumit
+    Redirect 302 /component/ateena/kirja/804 /upeat-helpot-metallilankakorut
+    Redirect 302 /component/ateena/kirja/805 /kotileikki
+    Redirect 302 /component/ateena/kirja/806 /ihmeelliset-elaimet
+    #Uutuudet kevät2016 - ruoka
+    Redirect 302 /component/ateena/kirja/801 /koko-perheen-kattaus
+    Redirect 302 /component/ateena/kirja/802 /viinakeittokirja
+    #Uutuudet kevät2016 - elämä
+    Redirect 302 /component/ateena/kirja/790 /tiloissa
+    Redirect 302 /component/ateena/kirja/796 /lyhyt-matka-perille
+    Redirect 302 /component/ateena/kirja/798 /ujon-urakirja
+    Redirect 302 /component/ateena/kirja/799 /hoida-mielellasi
+    #Uutuudet kevät2016 - yhteiskunta
+    Redirect 302 /component/ateena/kirja/792 /rahan-ruhtinaat
+    Redirect 302 /component/ateena/kirja/800 /superrikkaat-ja-rutikoyhat
+    #Uutuudet kevät2016 - luonto
+    Redirect 302 /component/ateena/kirja/794 /kuudes-sukupuutto
+    #Uutuudet kevät2016 - huumori
+    Redirect 302 /component/ateena/kirja/807 /finnish-nightmares
+    Redirect 302 /component/ateena/kirja/808 /suomalaisten-painajaisia
+    #Uutuudet kevät2016  pokkarit
+    Redirect 302 /component/ateena/kirja/809 /kirjat/pokkarit/introvertit-pokkari
+    Redirect 302 /component/ateena/kirja/810 /kirjat/pokkarit/niiden-kirjojen-mukaan-teidat-on-tuomittava-pokkari
+    Redirect 302 /component/ateena/kirja/811 /kirjat/pokkarit/sopimus-pokkari
+    Redirect 302 /component/ateena/kirja/813 /kirjat/pokkarit/maailmassa-on-virhe-pokkari
+    Redirect 302 /component/ateena/kirja/815 /kirjat/pokkarit/rakastettu-johtaja-ylpeana-esittaa-pokkari
+    #Uutuuder kevät2016 - sähkökirjat
+    Redirect 302 /component/ateena/kirja/783 /kirjat/e-kirjat/mita-miehen-pitaa-sahkokirja
+    Redirect 302 /component/ateena/kirja/785 /kirjat/e-kirjat/jonain-kevaana-heraan-sahkokirja
+    Redirect 302 /component/ateena/kirja/787 /kirjat/e-kirjat/tahtisilma-sahkokirja
+    Redirect 302 /component/ateena/kirja/793 /kirjat/e-kirjat/rahan-ruhtinaat-sahkokirja
+    Redirect 302 /component/ateena/kirja/797 /kirjat/e-kirjat/lyhyt-matka-perille-sahkokirja
+    #Kirjakategoriat
+    Redirect 302 /component/ateena/kirjat/1 /kirjat/kaunokirjat
+    Redirect 302 /component/ateena/kirjat/2 /kirjat/historia
+    Redirect 302 /component/ateena/kirjat/4 /kirjat/harrastukset
+    Redirect 302 /component/ateena/kirjat/16 /kirjat/ruoka
+    Redirect 302 /component/ateena/kirjat/8 /kirjat/elama
+    Redirect 302 /component/ateena/kirjat/6 /kirjat/yhteiskunta
+    Redirect 302 /component/ateena/kirjat/17 /kirjat/luonto
+    Redirect 302 /component/ateena/kirjat/3 /kirjat/huumori
+    Redirect 302 /component/ateena/kirjat/13 /kirjat/elamakerrat
+    Redirect 302 /component/ateena/kirjat/11 /kirjat/pokkarit
+    Redirect 302 /component/ateena/kirjat/7 /kirjat/oppikirjat
+    Redirect 302 /component/ateena/kirjat/15 /kirjat/e-kirjat
+    Redirect 302 /component/ateena/kirjat/18 /kirjat/muut-tuotteet
+    #Muut sivut
+    Redirect 302 /component/ateena/kirjat /kirjat
+    Redirect 302 /lehdistoe /lehdisto
+    Redirect 302 /atena-in-english /atena_in_english
+    #Kirjailijat
+    Redirect 302 /component/ateena/kirjailija/368 /kirjailijat-kategoria/roope-lipasti
+    Redirect 302 /kirjailijat/kirjailija/368 /kirjailijat-kategoria/roope-lipasti
+    Redirect 302 /tilaukset/kirjailija/368 /kirjailijat-kategoria/roope-lipasti
+    Redirect 302 /component/ateena/kirjailija/530 /kirjailijat-kategoria/kati-reijonen
+    Redirect 302 /kirjailijat/kirjailija/530 /kirjailijat-kategoria/kati-reijonen
+    Redirect 302 /tilaukset/kirjailija/530 /kirjailijat-kategoria/kati-reijonen
+    Redirect 302 /component/ateena/kirjailija/540 /kirjailijat-kategoria/henriikka-ronkkonen
+    Redirect 302 /tilaukset/kirjailija/540 /kirjailijat-kategoria/henriikka-ronkkonen
+    Redirect 302 /kirjailijat/kirjailija/540 /kirjailijat-kategoria/henriikka-ronkkonen
+    Redirect 302 /component/ateena/kirjailija/538 /kirjailijat-kategoria/karoliina-korhonen
+    Redirect 302 /tilaukset/kirjailija/538 /kirjailijat-kategoria/karoliina-korhonen
+    Redirect 302 /kirjailijat/kirjailija/538 /kirjailijat-kategoria/karoliina-korhonen
+
+    #Päävalikko
+   #  Redirect 302 /catalog/category/view/id/600 /kirjailijat-cms
+   #  Redirect 302 /kirjailijat-kategoria-8 /kirjailijat-cms
+   #  Redirect 302 /lehdisto-8 /lehdisto-cms
+   #  Redirect 302 /etusivu-kategoria-8 /etusivu
+   #  Redirect 302 /kirjailijat-kategoria-10 /kirjailijat-cms
+   #  Redirect 302 /kirjailijat-kategoria-8 /kirjailijat-cms
+   #  Redirect 302 /kirjailijat-kategoria-11 /kirjailijat-cms
+
+############################################
+## you can put here your magento root folder
+## path relative to web root
+
+    #RewriteBase /magento/
+
+############################################
+## uncomment next line to enable light API calls processing
+
+    RewriteRule ^api/([a-z][0-9a-z_]+)/?$ api.php?type=$1 [QSA,L]
+
+############################################
+## rewrite API2 calls to api.php (by now it is REST only)
+
+    RewriteRule ^api/rest api.php?type=rest [QSA,L]
+
+############################################
+## workaround for HTTP authorization
+## in CGI environment
+
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+############################################
+## TRACE and TRACK HTTP methods disabled to prevent XSS attacks
+
+    RewriteCond %{REQUEST_METHOD} ^TRAC[EK]
+    RewriteRule .* - [L,R=405]
+
+############################################
+## redirect for mobile user agents
+
+    #RewriteCond %{REQUEST_URI} !^/mobiledirectoryhere/.*$
+    #RewriteCond %{HTTP_USER_AGENT} "android|blackberry|ipad|iphone|ipod|iemobile|opera mobile|palmos|webos|googlebot-mobile" [NC]
+    #RewriteRule ^(.*)$ /mobiledirectoryhere/ [L,R=302]
+
+############################################
+## always send 404 on missing files in these folders
+
+    RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
+
+############################################
+## never rewrite for existing files, directories and links
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+
+############################################
+## rewrite everything else to index.php
+
+    RewriteRule .* index.php [L]
+
+</IfModule>
+
+
+############################################
+## Prevent character encoding issues from server overrides
+## If you still have problems, use the second line instead
+
+    AddDefaultCharset Off
+    #AddDefaultCharset UTF-8
+
+<IfModule mod_expires.c>
+
+############################################
+## Add default Expires header
+## http://developer.yahoo.com/performance/rules.html#expires
+
+    ExpiresDefault "access plus 1 year"
+
+</IfModule>
+
+############################################
+## By default allow all access
+
+    Order allow,deny
+    Allow from all
+
+###########################################
+## Deny access to release notes to prevent disclosure of the installed Magento version
+
+    <Files RELEASE_NOTES.txt>
+        order allow,deny
+        deny from all
+    </Files>
+
+############################################
+## If running in cluster environment, uncomment this
+## http://developer.yahoo.com/performance/rules.html#etags
+
+    #FileETag none

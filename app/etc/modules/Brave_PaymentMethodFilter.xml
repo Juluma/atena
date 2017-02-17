@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Brave_PaymentMethodFilter>
+            <codePool>local</codePool>
+            <active>true</active>
+        </Brave_PaymentMethodFilter>
+    </modules>
+</config>

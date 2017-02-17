@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Brave_Sales>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Brave_Sales>
+    </modules>
+</config>

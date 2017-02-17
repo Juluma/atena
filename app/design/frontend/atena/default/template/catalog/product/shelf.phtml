@@ -1,0 +1,100 @@
+<?php
+
+$products = Mage::getResourceModel('catalog/product_collection')
+->addAttributeToSelect(['name', 'image', 'presentation_ingress', 'url_key'])
+->addAttributeToFilter('visibility', array('neq' => 1))
+->addAttributeToFilter('status', 1)
+->addAttributeToFilter('show_on_frontpage', 1)
+->setPageSize(4)
+->load();
+
+$books = [];
+
+if ($products) {
+	$i = 0;
+	foreach ($products as $product) {
+		$books[$i]['id'] = $product->getId();
+		$books[$i]['name'] = $product->getName();
+		$books[$i]['img'] = $product->getImage();
+		$books[$i]['txt'] = strip_tags($product->getPresentationIngress());
+		$books[$i]['url_key'] = $product->getUrlKey();
+
+		foreach($product->getCategoryCollection() as $category) {
+			$id = $category->getId();
+			if ($category->getParentCategory()->getId() == '20') {
+				$cat = Mage::getModel('catalog/category')->load($id);
+				$books[$i]['authors'][] = $cat->getName();
+			}
+		}
+		if (sizeof($books[$i]['authors']) <= 2) $books[$i]['authors'] = implode(" &amp; ", $books[$i]['authors']);
+		else {
+			$books[$i]['authors'] = implode(", ", $books[$i]['authors']);
+		    $pos = strrpos($books[$i]['authors'], ", ");
+	        $books[$i]['authors'] = substr_replace($books[$i]['authors'], " &amp; ", $pos, strlen(", "));
+		}
+		$i++;
+	}
+}
+
+$imgbase = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . 'catalog' . DS . 'product' . DS;
+if ($books) { ?>
+	<div class="row" id="bookshelf">
+		<?php 
+		foreach ($books as $key => $book) { 
+			?>
+			<div class="col-sm-3 col-md-2 book_link">
+				<div class="book_wrapper">
+					<a href="#" class="bookshelf_link" 
+						data-id="<?php echo $book['id']; ?>" data-desc="<?php echo $book['txt']; ?>"
+						data-name="<?php echo $book['name']; ?>" data-authors="<?php echo $book['authors']; ?>" 
+						data-urlkey="<?php echo $book['url_key']; ?>">
+			    	    <img src="<?php echo $imgbase . $book['img'] ?>" alt="<?php echo $book['name'] ?>"/>
+			    	</a>
+			    </div>
+		    </div>
+		<?php 
+		}
+		if (sizeof($books) < 4) {
+			for ($i = sizeof($books); $i < 4; $i++) { 
+				?>
+				<div class="col-sm-3 col-md-2">&nbsp;</div>
+				<?php 
+			}
+		} 
+		?>
+		<div class="col-sm-12 col-md-4" id="book_details" style="display:none;">
+			<h5></h5>
+			<h3></h3>
+			<!--<hr>-->
+			<i><span></span></i>
+			<a class="button btn-atena" href="#"><span>Esittely</span></a>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+	var baseUrl = '<?php echo Mage::getBaseUrl(); ?>';
+    (function($) {
+        $(function() {
+        	$('.bookshelf_link').click(function(e){
+        		var $el = $(this);
+        		e.preventDefault();
+        		$("#bookshelf img").animate({marginBottom:'0px'});        		
+        		$el.find('img').animate({marginBottom:'20px'});
+        		$el.addClass('book-active');
+
+        		$("#book_details").fadeOut(500, function(){
+	        		$("#book_details h5").html($el.data('authors'));
+	        		$("#book_details h3").html($el.data('name'));
+	        		$("#book_details span:first").html($el.data('desc'));
+	        		$("#book_details a").attr('href', baseUrl + $el.data('urlkey'));
+	        		$("#book_details").fadeIn('slow');
+        		});
+        	});
+
+        	$('#bookshelf a:first').click();
+        });
+    })(jQuery);
+	</script>
+<?php 
+} 
+?>

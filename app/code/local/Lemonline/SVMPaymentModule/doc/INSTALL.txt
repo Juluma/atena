@@ -1,0 +1,36 @@
+INSTALLATION INSTRUCTIONS
+
+
+FROM .ZIP-PACKAGE
+
+- Extract the ZIP-package on your computer
+
+- Upload all extracted files to your Magento installation directory keeping the folder structure
+
+- Login to Magento admin panel and refresh cache (System > Cache Management)
+
+- Logout from admin panel
+
+- Login to admin panel again
+
+- You're done!
+
+----------
+
+FROM .TGZ PACKAGE (SSH/LINUX INSTALLATION)
+
+- Purchase and download the installation package
+
+- Upload the TGZ package to the root of your Magento installation directory
+
+- Login to your web server with SSH client
+
+- In the Magento root directory extract the package with following command: tar -zxf filename.tgz
+
+- Login to Magento admin panel and refresh cache (System > Cache Management)
+
+- Logout from admin panel
+
+- Login to admin panel again
+
+- You're done!

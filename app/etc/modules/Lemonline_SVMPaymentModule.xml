@@ -1,0 +1,11 @@
+<config>
+	<modules>
+		<Lemonline_SVMPaymentModule>
+			<active>true</active>
+			<codePool>local</codePool>
+			<depends>
+				<Mage_Payment/>
+			</depends>
+		</Lemonline_SVMPaymentModule>
+	</modules>
+</config>

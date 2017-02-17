@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<config>
+  <sections>
+    <payment>
+      <groups>
+        <maksukaista translate="label" module="paygate">
+          <label>Maksukaista</label>
+          <frontend_type>text</frontend_type>
+          <sort_order>700</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <fields>
+          <active translate="label">
+            <label>Enabled</label>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_yesno</source_model>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </active>
+          <title translate="label">
+            <label>Title</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>20</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+          </title>
+          <api_key translate="label">
+            <label>Sub-Merchant api key</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>60</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </api_key>
+          <merchant_private_key translate="label">
+            <label>Merchants private key</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>80</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </merchant_private_key>
+          <orderid_prefix>
+            <backend_model>maksukaista/validate</backend_model>
+            <label>Order number prefix</label>
+            <comment>Prefix for order number to ensure uniqueness when used in Maksukaista service</comment>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </orderid_prefix>
+          <embedded translate="label">
+            <label>Embedded</label>
+            <comment>Embedded selection for the payment methods</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>110</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </embedded>
+          <dynamic_payment_methods translate="label">
+            <label>Dynamic Payment Methods</label>
+            <comment>Retrieve enabled payment methods automatically for embedded payment</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>111</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+            <depends><embedded>1</embedded></depends>
+          </dynamic_payment_methods>
+          <bank_payments translate="label">
+            <backend_model>maksukaista/validate</backend_model>
+            <label>Banks</label>
+            <comment>Banks as payment methods</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>112</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </bank_payments>
+          <creditcards_payments translate="label">
+            <label>Creditcards</label>
+            <comment>Creditcards as payment methods</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>113</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </creditcards_payments>
+          <arvato_payments translate="label">
+            <label>Maksukaista Lasku</label>
+            <comment>Maksukaista Lasku (Arvato) as payment method, use only if you are Maksukaista Conversion subscriber</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>114</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </arvato_payments>
+          <invoice_payments translate="label">
+            <label>Creditcard Invoices</label>
+            <comment>Invoices as payment methods</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>115</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </invoice_payments>
+          <laskuyritykselle translate="label">
+            <label>Laskuyritykselle.fi</label>
+            <comment>Laskuyritykselle as payment method</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>116</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </laskuyritykselle>
+          <send_items>
+            <label>Send product breakdown to Maksukaista</label>
+            <comment>Sends product breakdown to Maksukaista if product prices match with total order amount (3rd party extensions might cause calculation errors)</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>150</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </send_items>
+          <send_receipt>
+            <label>Send Maksukaista receipt to customer after successful payment</label>
+            <comment>Enable this if you want your customer to have Maksukaista receipt in addition to your webstore's receipt.</comment>
+            <frontend_type>select</frontend_type>
+            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+            <sort_order>160</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </send_receipt>
+          <sort_order translate="label">
+            <label>Sort Order</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>170</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+          </sort_order>
+          <min_order_total translate="label">
+            <label>Minimum Order Total</label>
+            <comment>This value has to be set to prevent the payment method to be used with free orders</comment>
+            <frontend_type>text</frontend_type>
+            <sort_order>180</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>0</show_in_store>
+            <validate>validate-greater-than-zero</validate>
+          </min_order_total>
+          </fields>
+        </maksukaista>
+      </groups>
+    </payment>
+  </sections>
+</config>

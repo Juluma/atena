@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<config>
+    <!--<modules>-->
+        <!--<Brave_PaymentMethodFilter>-->
+            <!--<version>1.0.1</version>-->
+        <!--</Brave_PaymentMethodFilter>-->
+    <!--</modules>-->
+    <!--<global>-->
+        <!--<models>-->
+            <!--<paymentmethodfilter>-->
+                <!--<class>Brave_PaymentMethodFilter_Model_Observer</class>-->
+            <!--</paymentmethodfilter>-->
+        <!--</models>-->
+    <!--</global>-->
+    <frontend>
+        <events>
+            <payment_method_is_active>
+                <observers>
+                    <paymentfilter_payment_method_is_active>
+                        <type>singleton</type>
+                        <class>Brave_PaymentMethodFilter_Model_Observer</class>
+                        <method>filterpaymentmethod</method>
+                    </paymentfilter_payment_method_is_active>
+                </observers>
+            </payment_method_is_active>
+        </events>
+    </frontend>
+</config>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Maksukaista_Maksukaista>
+            <active>true</active>
+            <codePool>local</codePool>
+           <depends>
+            	<Mage_Payment />
+	</depends>
+	<version>3.1.0</version>
+        </Maksukaista_Maksukaista>
+    </modules>
+</config>

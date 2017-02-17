@@ -1,0 +1,15 @@
+SETUP INSTRUCTIONS FOR PAYTRAIL
+
+1. Get the Paytrail service at http://www.paytrail.com/
+2. Install the Lemonline_SVMPaymentModule
+3. Log in to the Magento admin panel
+4. Go "System > Configuration > Payment Methods > Paytrail"
+5. Set "Enabled" to "Yes"
+6. Set "Title" for Paytrail
+7. Set "Merchant ID" you have received from Paytrail
+8. Set "Secure Key"  you have received from Paytrail
+9. Set "Interface Language" that you want to use in Paytrail
+10. Select the new order email sending option from "New order email is sent" menu
+11. Select the new invoice email sending option from "New invoice email is sent" menu
+12. Click "Save Config"
+13. Go through the checkout process and make sure the payment method is available

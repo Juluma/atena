@@ -1,0 +1,97 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     atena_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<div class="block block-subscribe">
+
+    <!-- Begin MailChimp Signup Form -->
+    <div id="mc_embed_signup">
+        <form action="//atena.us13.list-manage.com/subscribe/post?u=98cf1cf018fe180516a79dc8b&amp;id=57095c7013" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+            <div id="mc_embed_signup_scroll">
+                <h7>Tilaa uutiskirje</h7>
+                <div class="mc-field-group">
+                    <label for="mce-EMAIL">Sähköpostiosoite </label>
+                    <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+                </div>
+                <div class="mc-field-group">
+                    <label for="mce-NAME">Nimi </label>
+                    <input type="text" value="" name="NAME" class="required" id="mce-NAME">
+                </div>
+                <div id="mce-responses" class="clear">
+                    <div class="response" id="mce-error-response" style="display:none"></div>
+                    <div class="response" id="mce-success-response" style="display:none"></div>
+                </div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_98cf1cf018fe180516a79dc8b_57095c7013" tabindex="-1" value=""></div>
+                <div class="clear"><input type="submit" value="Tilaa" name="subscribe" id="mc-embedded-subscribe" class="button btn-atena"></div>
+            </div>
+        </form>
+    </div>
+    <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='NAME';ftypes[3]='text';fnames[4]='MMERGE4';ftypes[4]='text';fnames[5]='MMERGE5';ftypes[5]='text';fnames[6]='MMERGE6';ftypes[6]='text';fnames[7]='MMERGE7';ftypes[7]='text';fnames[8]='MMERGE8';ftypes[8]='text';fnames[9]='MMERGE9';ftypes[9]='text';fnames[10]='MMERGE10';ftypes[10]='text';fnames[11]='MMERGE11';ftypes[11]='text';fnames[12]='MMERGE12';ftypes[12]='text'; /*
+         * Translated default messages for the $ validation plugin.
+         * Locale: FI
+         */
+            $.extend($.validator.messages, {
+                required: "T&auml;m&auml; kentt&auml; on pakollinen.",
+                maxlength: $.validator.format("Voit sy&ouml;tt&auml;&auml; enint&auml;&auml;n {0} merkki&auml;."),
+                minlength: $.validator.format("V&auml;hint&auml;&auml;n {0} merkki&auml;."),
+                rangelength: $.validator.format("Sy&ouml;t&auml; v&auml;hint&auml;&auml;n {0} ja enint&auml;&auml;n {1} merkki&auml;."),
+                email: "Sy&ouml;t&auml; oikea s&auml;hk&ouml;postiosoite.",
+                url: "Sy&ouml;t&auml; oikea URL osoite.",
+                date: "Sy&ouml;t&auml; oike p&auml;iv&auml;m&auml;&auml;r&auml;.",
+                dateISO: "Sy&ouml;t&auml; oike p&auml;iv&auml;m&auml;&auml;r&auml; (VVVV-MM-DD).",
+                number: "Sy&ouml;t&auml; numero.",
+                digits: "Sy&ouml;t&auml; pelk&auml;st&auml;&auml;n numeroita.",
+                equalTo: "Sy&ouml;t&auml; sama arvo uudestaan.",
+                range: $.validator.format("Sy&ouml;t&auml; arvo {0} ja {1} v&auml;lilt&auml;."),
+                max: $.validator.format("Sy&ouml;t&auml; arvo joka on yht&auml; suuri tai suurempi kuin {0}."),
+                min: $.validator.format("Sy&ouml;t&auml; arvo joka on pienempi tai yht&auml; suuri kuin {0}."),
+                creditcard: "Sy&ouml;t&auml; voimassa oleva luottokorttinumero."
+            });}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+    <!--End mc_embed_signup-->
+
+
+    <!-- Include mailchimp form -->
+    <!--<iframe class="block-subscribe-iframe" src="http://eepurl.com/b8aJd5"></iframe>-->
+    <!--
+    <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="newsletter-validate-detail">
+        <h7>
+            <?php echo $this->__('Tilaa uutiskirje') ?>
+        </h7>
+        <div class="block-content">
+            <div class="input-box">
+               <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="email" id="newsletter" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Sign up for our newsletter')) ?>" class="input-text required-entry validate-email" placeholder="<?php echo $this->__('Email') ?>"/>
+            </div>
+            <div class="actions">
+                <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Subscribe')) ?>" class="button btn-atena"><span><span><?php echo $this->__('Subscribe') ?></span></span></button>
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var newsletterSubscriberFormDetail = new VarienForm('newsletter-validate-detail');
+    //]]>
+    </script>
+    -->
+</div>
