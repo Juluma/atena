@@ -26,8 +26,7 @@ class Brave_Kirjakeskus_Model_Observer {
     public function SendRequest($observer) {
     	$orderDetails = []; // Collect order details
         $event = $observer->getEvent();
-        $event->getInvoice()->getOrder(); // Tässä määrittää milloin luo .xml, muista vaihtaa config.xml kans Invoice/Item ja pay/cancel
-        //$order = $event->getItem()->getOrder();
+        $order = $event->getInvoice()->getOrder();
 
         $this->messageNum = $order->getIncrementId();
         $this->timestamp = date("Ymd") . "T" . date("Hi");
@@ -74,6 +73,7 @@ class Brave_Kirjakeskus_Model_Observer {
         $login = ftp_login($conn, $user, $pass);
         if (!$login) return false;
 
+	ftp_pasv($conn, true); // Turn passive mode on
         ftp_chdir($conn, "in");
         ftp_put($conn, $this->filename, $filepath, FTP_ASCII);
         ftp_close($conn);
@@ -223,43 +223,6 @@ class Brave_Kirjakeskus_Model_Observer {
         $Writer->endElement(); // Header
 
         $i = 1;
-        /*foreach ($order->getAllItems() as $item) {
-            $Writer->startElement('ItemDetail');
-            $Writer->writeElement('LineNumber', $i);
-            $Writer->startElement('ProductID');
-            $Writer->writeElement('ProductIDType', 'EAN13');
-            $Writer->writeElement('Identifier', $item->getSku());
-            $Writer->endElement(); // ProductID
-            $Writer->writeElement('OrderQuantity', $item->getQtyToShip());   
-
-            // Kuponkikoodi
-            if ($couponCode = $order->coupon_code) {
-                $Writer->startElement('Message');
-                $Writer->writeElement('MessageType', '01');
-                $Writer->writeElement('MessageLine', $couponCode);
-                $Writer->endElement();
-            }
-
-            // Get or calculate discount pct LISÄYS
-            $discountPct = (float)$item->getDiscountPercent();
-            if (!$discountPct) { // No pct set, is there amount?
-                $itemDiscount = (float)$item->getDiscountAmount();
-                if ($itemDiscount) { // Yes
-                    $price = (float)$item->getBaseOriginalPrice(); // Price incl tax (discount has tax)
-                    $discountPct = number_format($itemDiscount / $price * 100, 2, ',', '');
-                }
-            } else {
-                    $discountPct = number_format($discountPct, 2, ',', '');
-            } // <-- LISÄYS
-
-            $Writer->startElement('Message');
-            $Writer->writeElement('MessageType', '31'); // Alennusprosentti
-            $Writer->writeElement('MessageLine', $discountPct); //muokkaus, aiemmin ('0');
-            $Writer->endElement();
-            $Writer->endElement(); // ItemDetail
-            $i++;
-        } */
-
         foreach ($order->getAllItems() as $item) {
 
             $Writer->startElement('ItemDetail');
@@ -281,7 +244,10 @@ class Brave_Kirjakeskus_Model_Observer {
     // Haetaan tai lasketaan tuotteen mahdollinen alennusprosentti
             $discountPct = (float)$item->getDiscountPercent();
             if (!$discountPct) { // No pct set, is there amount?
-                $itemDiscount = (float)$item->getDiscountAmount();
+
+                // Divide with quantity, because discount amount contains all products' discounts!
+                $itemDiscount = (float)$item->getDiscountAmount() / (int)$item->getQtyOrdered();
+
                 if ($itemDiscount) { // Yes
                     $price = (float)$item->getBaseOriginalPrice(); // Price incl. tax (discount has tax)
                     $discountPct = $itemDiscount / $price * 100;
@@ -299,8 +265,8 @@ class Brave_Kirjakeskus_Model_Observer {
     // Tuotteen hinta
             $Writer->startElement('Message');
             $Writer->writeElement('MessageType', '30');
-            // $Writer->writeElement('MessageLine', number_format($itemPrice, 2, ',', ''));
             $Writer->writeElement('MessageLine', $itemPrice);
+            //$Writer->writeElement('MessageLine', number_format($itemPrice, 2, ',', ''));
             $Writer->endElement();
 
     // Alennusprosentti (*100)
@@ -314,23 +280,23 @@ class Brave_Kirjakeskus_Model_Observer {
         }
 
         // Toimituskulut yhteensä omana tietona -- kaikki hinnat pluginin mukaan verottomia (vaikka sis. veron)...
-            $Writer->startElement('ItemDetail');
-            $Writer->writeElement('LineNumber', $i);
-            $Writer->startElement('ProductID');
-            $Writer->writeElement('ProductIDType', 'EAN13');
-            $Writer->writeElement('Identifier', '9996501');
-            $Writer->endElement(); // ProductID
-            $Writer->writeElement('OrderQuantity', '1');   
-            $Writer->startElement('Message');
-            $Writer->writeElement('MessageType', '30');
-            $Writer->writeElement('MessageLine', number_format($order->getShippingAmount() / 1.10, 2, ',', '')); // @fix (possible?)
-            $Writer->endElement();
-            $Writer->startElement('Message');
-            $Writer->writeElement('MessageType', '31'); // Alennusprosentti
-            $Writer->writeElement('MessageLine', '0');
-            $Writer->endElement();
-            $Writer->endElement(); // ItemDetail
-            $i++;
+        $Writer->startElement('ItemDetail');
+        $Writer->writeElement('LineNumber', $i);
+        $Writer->startElement('ProductID');
+        $Writer->writeElement('ProductIDType', 'EAN13');
+        $Writer->writeElement('Identifier', '9996501');
+        $Writer->endElement(); // ProductID
+        $Writer->writeElement('OrderQuantity', '1');   
+        $Writer->startElement('Message');
+        $Writer->writeElement('MessageType', '30');
+        $Writer->writeElement('MessageLine', number_format($order->getShippingAmount() / 1.10, 2, ',', '')); // @fix (possible?)
+        $Writer->endElement();
+        $Writer->startElement('Message');
+        $Writer->writeElement('MessageType', '31'); // Alennusprosentti
+        $Writer->writeElement('MessageLine', '0');
+        $Writer->endElement();
+        $Writer->endElement(); // ItemDetail
+        $i++;
 
         // @todo Mahdollisen nopean toimituksen ja ulkomaalisän laitto omina riveinään
         if (in_array($this->shippingCode, [808, 806])) { // Toimitustapalisä
