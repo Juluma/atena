@@ -26,7 +26,7 @@ class Brave_Kirjakeskus_Model_Observer {
     public function SendRequest($observer) {
     	$orderDetails = []; // Collect order details
         $event = $observer->getEvent();
-        $order = $event->getInvoice()->getOrder();
+        $order = Mage::getModel('sales/order')->loadByIncrementId('100000737');//$event->getInvoice()->getOrder();
 
         $this->messageNum = $order->getIncrementId();
         $this->timestamp = date("Ymd") . "T" . date("Hi");
@@ -233,7 +233,7 @@ class Brave_Kirjakeskus_Model_Observer {
             $Writer->endElement(); // ProductID
             $Writer->writeElement('OrderQuantity', $item->getQtyToShip());   
 
-    // Kuponkikoodi
+            // Kuponkikoodi
             if ($couponCode = $order->coupon_code) {
                 $Writer->startElement('Message');
                 $Writer->writeElement('MessageType', '01');
@@ -241,7 +241,7 @@ class Brave_Kirjakeskus_Model_Observer {
                 $Writer->endElement();
             }
 
-    // Haetaan tai lasketaan tuotteen mahdollinen alennusprosentti
+            // Haetaan tai lasketaan tuotteen mahdollinen alennusprosentti
             $discountPct = (float)$item->getDiscountPercent();
             if (!$discountPct) { // No pct set, is there amount?
 
@@ -254,7 +254,7 @@ class Brave_Kirjakeskus_Model_Observer {
                 }
             }
 
-    // Tuotteen veroton hinta (sis. mahdollisen alennuksen!)
+            // Tuotteen veroton hinta (sis. mahdollisen alennuksen!)
             $itemPrice = (float)$item->getBasePrice();
             if ($discountPct) {
                 $itemPrice = $itemPrice - $itemPrice * $discountPct / 100;
@@ -262,14 +262,14 @@ class Brave_Kirjakeskus_Model_Observer {
             }
             $itemPrice = number_format($itemPrice, 2, ',', '');
 
-    // Tuotteen hinta
+            // Tuotteen hinta
             $Writer->startElement('Message');
             $Writer->writeElement('MessageType', '30');
             $Writer->writeElement('MessageLine', $itemPrice);
             //$Writer->writeElement('MessageLine', number_format($itemPrice, 2, ',', ''));
             $Writer->endElement();
 
-    // Alennusprosentti (*100)
+            // Alennusprosentti (*100)
             $Writer->startElement('Message');
             $Writer->writeElement('MessageType', '31');
             $Writer->writeElement('MessageLine', $discountPct);
@@ -286,14 +286,42 @@ class Brave_Kirjakeskus_Model_Observer {
         $Writer->writeElement('ProductIDType', 'EAN13');
         $Writer->writeElement('Identifier', '9996501');
         $Writer->endElement(); // ProductID
-        $Writer->writeElement('OrderQuantity', '1');   
+
+        $shippingAmount     = (float)$order->getShippingAmount();
+        $shippingDiscount   = 0;
+
+        if (!$shippingAmount) {
+            $resource       = Mage::getSingleton('core/resource');
+            $readConnection = $resource->getConnection('core_read');
+
+            // Päätellään toimituskulun summa, jos ilmainen toimitus.
+            // Haetaan perussumma toimituskulutaulusta tilatulle tuotemäärälle ja toimituskohteelle.
+            // Oletus tässä on, ettei ilmaisia toimituksia lähetetä nopealla toimitustavalla.
+            $query   = 'SELECT * FROM ' . $resource->getTableName('shipping_matrixrate');
+            $query  .= ' WHERE condition_from_value >= ' . $order->getTotalItemCount();
+            $query  .= ' AND condition_to_value <= ' . $order->getTotalItemCount();
+
+            // Lisätään toimituskohde ehtoihin, ja oletetaan, että kyseessä on normaali toimitus... (parempaan ei pysty)
+            $query  .= ' AND dest_country_id = ';
+            $query  .= $order->getShippingAddress()->getCountry() === 'FI' ? '\'FI\'' : '0';
+            $query  .= ' AND delivery_type LIKE \'Normaali%\'';
+            $results = $readConnection->fetchAll($query);
+
+            if ($results) {
+                $shippingAmount     = (float)$results[0]['price'];
+                $shippingDiscount   = $shippingAmount;
+            }
+        }
+
+        $Writer->writeElement('OrderQuantity', '1');
         $Writer->startElement('Message');
         $Writer->writeElement('MessageType', '30');
-        $Writer->writeElement('MessageLine', number_format($order->getShippingAmount() / 1.10, 2, ',', '')); // @fix (possible?)
+        $Writer->writeElement('MessageLine', number_format($shippingAmount / 1.10, 2, ',', ''));
         $Writer->endElement();
+
         $Writer->startElement('Message');
         $Writer->writeElement('MessageType', '31'); // Alennusprosentti
-        $Writer->writeElement('MessageLine', '0');
+        $Writer->writeElement('MessageLine', number_format($shippingDiscount / 1.10, 2, ',', ''));
         $Writer->endElement();
         $Writer->endElement(); // ItemDetail
         $i++;
@@ -328,7 +356,7 @@ class Brave_Kirjakeskus_Model_Observer {
             $Writer->writeElement('OrderQuantity', '1');   
             $Writer->startElement('Message');
             $Writer->writeElement('MessageType', '30');
-            $Writer->writeElement('MessageLine', number_format(($order->getShippingAmount() - 6) / 1.10, 2, ',', '')); // @fix (possible?)
+            $Writer->writeElement('MessageLine', number_format(($shippingAmount - 6) / 1.10, 2, ',', '')); // @fix (possible?)
             $Writer->endElement();
             $Writer->startElement('Message');
             $Writer->writeElement('MessageType', '31'); // Alennusprosentti
