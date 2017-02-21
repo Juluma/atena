@@ -26,7 +26,7 @@ class Brave_Kirjakeskus_Model_Observer {
     public function SendRequest($observer) {
     	$orderDetails = []; // Collect order details
         $event = $observer->getEvent();
-        $order = Mage::getModel('sales/order')->loadByIncrementId('100000737');//$event->getInvoice()->getOrder();
+        $order = $event->getInvoice()->getOrder();
 
         $this->messageNum = $order->getIncrementId();
         $this->timestamp = date("Ymd") . "T" . date("Hi");
