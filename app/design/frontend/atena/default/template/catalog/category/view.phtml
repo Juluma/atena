@@ -109,10 +109,35 @@ if ($_category->getParentId() == 20) { // Kirjailijakategoria
     <?php
 } elseif ($_category->getId() == 3) { // Uutuudet -kategoria
     // Haetaan kategoria, joka on määritetty näytettävän etusivulla.
-    $categories = Mage::getResourceModel('catalog/category_collection');
-    $categories->addAttributeToSelect('*')->addAttributeToFilter('season_frontpage', 1)->load();
-    if ($categories->getFirstItem()) {
-        $season = $categories->getFirstItem();
+    $categories = Mage::getResourceModel('catalog/category_collection')
+        ->addAttributeToSelect('*')
+        ->addAttributeToFilter('season_frontpage', 1);
+    if ($categoryId = Mage::app()->getRequest()->getParam('sid')) {
+        $categories->addAttributeToFilter('entity_id', $categoryId);
+    }
+    $categories->addAttributeToSort('created_at', 'DESC')->load();
+
+    if ($season = $categories->getFirstItem()) {
+        // Links to other sesongit
+        $links  = [];
+        $i      = 0;
+
+        if ($categoryId) {
+            $categories = Mage::getResourceModel('catalog/category_collection')
+                ->addAttributeToSelect('*')
+                ->addAttributeToFilter('season_frontpage', 1)
+                ->addAttributeToSort('created_at', 'DESC')->load();
+        }
+
+        if ($categories->count() > 1) {
+            foreach ($categories as $category) {
+                if ($category->getId() !== $season->getId()) {
+                    $links[$i]['id']    = $category->getId();
+                    $links[$i]['name']  = $category->getName();
+                    $i++;
+                }
+            }
+        }
 
         // Haetaan kategoriat, joiden mukaan ryhmittelyt tehdään.
         $cat = Mage::getModel('catalog/category')->load($_category->getParentId());
@@ -202,7 +227,7 @@ if ($_category->getParentId() == 20) { // Kirjailijakategoria
             }
         }
         $groupProducts = $tmp;
-        $_columnCount = $this->getColumnCount();
+        $_columnCount = $this->getColumnCount() ? $this->getColumnCount() : 3;
         $i = 0;
 
         // Kopioi / liitä -peruskategorian viewin oleelliset asiat, ja liitä uusi
@@ -215,7 +240,6 @@ if ($_category->getParentId() == 20) { // Kirjailijakategoria
         </div>
         -->
         <div class="row">
-
             <div class="col-md-3 col-xs-12">
                 <div class="block block-layered-nav block-layered-nav--no-filters">
                     <div class="block-content toggle-content">
@@ -236,6 +260,16 @@ if ($_category->getParentId() == 20) { // Kirjailijakategoria
                             </dd>
                         </dl>
                     </div>
+                </div>
+                <div class="col-md-12">
+                    <h3>Katso myös</h3>
+                    <?php
+                    $url = Mage::helper('core/url')->getCurrentUrl();
+                    $url = strtok($url, '?');
+                    foreach ($links as $link) {
+                        printf('<a href="%s?sid=%s">%s</a><br/>', $url, $link['id'], $link['name']);
+                    }
+                    ?>
                 </div>
             </div>
             <div class="col-md-9">
