@@ -23,10 +23,14 @@ class Brave_Kirjakeskus_Model_Observer {
         'production' => ['server' => 'ftp.kirjakeskus.fi', 'user' => 'ateena', 'pass' => 'r5Z_?z30zwE%']
     ];
 
+    /**
+     * Create XML-file from order, and send it to Kirjakeskus server via FTP -connection.
+     *
+     * @param $observer
+     */
     public function SendRequest($observer) {
-    	$orderDetails = []; // Collect order details
         $event = $observer->getEvent();
-        $order = $event->getInvoice()->getOrder();
+        $order = $event->getInvoice()->getOrder(); // Mage::getModel('sales/order')->loadByIncrementId('xxx'); // Test
 
         $this->messageNum = $order->getIncrementId();
         $this->timestamp = date("Ymd") . "T" . date("Hi");
@@ -73,7 +77,7 @@ class Brave_Kirjakeskus_Model_Observer {
         $login = ftp_login($conn, $user, $pass);
         if (!$login) return false;
 
-	ftp_pasv($conn, true); // Turn passive mode on
+	    ftp_pasv($conn, true); // Turn passive mode on
         ftp_chdir($conn, "in");
         ftp_put($conn, $this->filename, $filepath, FTP_ASCII);
         ftp_close($conn);
@@ -279,52 +283,29 @@ class Brave_Kirjakeskus_Model_Observer {
             $i++;
         }
 
-        // Toimituskulut yhteensä omana tietona -- kaikki hinnat pluginin mukaan verottomia (vaikka sis. veron)...
-        $Writer->startElement('ItemDetail');
-        $Writer->writeElement('LineNumber', $i);
-        $Writer->startElement('ProductID');
-        $Writer->writeElement('ProductIDType', 'EAN13');
-        $Writer->writeElement('Identifier', '9996501');
-        $Writer->endElement(); // ProductID
-
         $shippingAmount     = (float)$order->getShippingAmount();
-        $shippingDiscount   = 0;
+        if ($shippingAmount) {
+            // Toimituskulut yhteensä omana tietona -- kaikki hinnat pluginin mukaan verottomia (vaikka sis. veron)...
+            $Writer->startElement('ItemDetail');
+            $Writer->writeElement('LineNumber', $i);
+            $Writer->startElement('ProductID');
+            $Writer->writeElement('ProductIDType', 'EAN13');
+            $Writer->writeElement('Identifier', '9996501');
+            $Writer->endElement(); // ProductID
 
-        if (!$shippingAmount) {
-            $resource       = Mage::getSingleton('core/resource');
-            $readConnection = $resource->getConnection('core_read');
+            $Writer->writeElement('OrderQuantity', '1');
+            $Writer->startElement('Message');
+            $Writer->writeElement('MessageType', '30');
+            $Writer->writeElement('MessageLine', number_format($shippingAmount / 1.10, 2, ',', ''));
+            $Writer->endElement();
 
-            // Päätellään toimituskulun summa, jos ilmainen toimitus.
-            // Haetaan perussumma toimituskulutaulusta tilatulle tuotemäärälle ja toimituskohteelle.
-            // Oletus tässä on, ettei ilmaisia toimituksia lähetetä nopealla toimitustavalla.
-            $query   = 'SELECT * FROM ' . $resource->getTableName('shipping_matrixrate');
-            $query  .= ' WHERE condition_from_value >= ' . $order->getTotalItemCount();
-            $query  .= ' AND condition_to_value <= ' . $order->getTotalItemCount();
-
-            // Lisätään toimituskohde ehtoihin, ja oletetaan, että kyseessä on normaali toimitus... (parempaan ei pysty)
-            $query  .= ' AND dest_country_id = ';
-            $query  .= $order->getShippingAddress()->getCountry() === 'FI' ? '\'FI\'' : '0';
-            $query  .= ' AND delivery_type LIKE \'Normaali%\'';
-            $results = $readConnection->fetchAll($query);
-
-            if ($results) {
-                $shippingAmount     = (float)$results[0]['price'];
-                $shippingDiscount   = $shippingAmount;
-            }
+            $Writer->startElement('Message');
+            $Writer->writeElement('MessageType', '31'); // Alennusprosentti
+            $Writer->writeElement('MessageLine', number_format(0, 2, ',', ''));
+            $Writer->endElement();
+            $Writer->endElement(); // ItemDetail
+            $i++;
         }
-
-        $Writer->writeElement('OrderQuantity', '1');
-        $Writer->startElement('Message');
-        $Writer->writeElement('MessageType', '30');
-        $Writer->writeElement('MessageLine', number_format($shippingAmount / 1.10, 2, ',', ''));
-        $Writer->endElement();
-
-        $Writer->startElement('Message');
-        $Writer->writeElement('MessageType', '31'); // Alennusprosentti
-        $Writer->writeElement('MessageLine', number_format($shippingDiscount / 1.10, 2, ',', ''));
-        $Writer->endElement();
-        $Writer->endElement(); // ItemDetail
-        $i++;
 
         // @todo Mahdollisen nopean toimituksen ja ulkomaalisän laitto omina riveinään
         if (in_array($this->shippingCode, [808, 806])) { // Toimitustapalisä
