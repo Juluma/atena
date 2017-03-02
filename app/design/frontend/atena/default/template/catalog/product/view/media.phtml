@@ -101,7 +101,7 @@
 ?>
 
 <?php if ($_product->getSizechartImage() && ($_product->getSizechartImage() != 'no_selection')) { ?>
-    <?php $sizechart_src = $this->helper('catalog/image')->init($_product, 'sizechart_image'); ?>
+    <?php $sizechart_src = $this->helper('catalog/image')->init($_product, 'sizechart_image')->setQuality(100); ?>
     <p style="text-align: center;"><a href="<?php print $sizechart_src; ?>" target="_blank"<?php //class="sizechart-link"?>><?php echo $this->__('Size chart'); ?></a></p>
 <?php } ?>
 
