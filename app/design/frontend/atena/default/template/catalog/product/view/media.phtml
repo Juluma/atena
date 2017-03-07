@@ -101,8 +101,39 @@
 ?>
 
 <?php if ($_product->getSizechartImage() && ($_product->getSizechartImage() != 'no_selection')) { ?>
-    <?php $sizechart_src = $this->helper('catalog/image')->init($_product, 'sizechart_image')->setQuality(100); ?>
-    <p style="text-align: center;"><a href="<?php print $sizechart_src; ?>" target="_blank"<?php //class="sizechart-link"?>><?php echo $this->__('Size chart'); ?></a></p>
+    <?php
+    // Get big image url, but get original instead of cache version
+    $sizechart_src  = $this->helper('catalog/image')->init($_product, 'sizechart_image')->setQuality(100);
+    $htmlLink       = $sizechart_src->__toString();
+    $urlParts       = parse_url($htmlLink);
+    $pathParts      = explode('/', $urlParts['path']);
+
+    // Remove cache related parts from path
+    foreach ($pathParts as $index => $part) {
+        // We need to remove four parts starting from cache position
+        if ($part === 'cache') {
+            $i = 1;
+            unset($pathParts[$index]);
+        } elseif (isset($i) && $i < 4) {
+            $i++;
+            unset($pathParts[$index]);
+        } elseif (isset($i)) {
+            break;
+        }
+    }
+
+    // Recreate url from remaining parts in path
+    $urlParts['path'] = implode("/", $pathParts);
+    $originalUrl = $urlParts['scheme'] . '://';
+    $originalUrl.= $urlParts['host'];
+    if (isset($urlParts['port']) && $urlParts['port']) $originalUrl.= ':' . $urlParts['port'];
+    $originalUrl.= $urlParts['path'];
+    ?>
+    <p style="text-align: center;">
+        <a href="<?php echo $originalUrl; ?>" target="_blank">
+            <?php echo $this->__('Size chart'); ?>
+        </a>
+    </p>
 <?php } ?>
 
 <?php echo $this->getChildHtml('after'); ?>
